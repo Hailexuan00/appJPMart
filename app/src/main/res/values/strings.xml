@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">JPMart_app</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="open">Mở menu</string>
+    <string name="close">Đóng menu</string>
 </resources>

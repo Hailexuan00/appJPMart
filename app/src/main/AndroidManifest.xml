@@ -13,6 +13,30 @@
         android:theme="@style/Theme.JPMart_app"
         tools:targetApi="31">
         <activity
+            android:name=".ChucNang.DoiMatKhauActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChucNang.NguoiDungActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChucNang.DoanhThuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChucNang.HoaDonActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChucNang.LoaiSPActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChucNang.SanPhamActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChucNang.ThongKeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
