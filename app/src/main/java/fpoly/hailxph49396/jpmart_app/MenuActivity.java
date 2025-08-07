@@ -21,6 +21,9 @@ import java.util.ArrayList;
 
 import fpoly.hailxph49396.jpmart_app.Adapter.MenuAdapter;
 import fpoly.hailxph49396.jpmart_app.ChucNang.DoiMatKhauActivity;
+import fpoly.hailxph49396.jpmart_app.ChucNang.HoaDonActivity;
+import fpoly.hailxph49396.jpmart_app.ChucNang.NhanVienActivity;
+import fpoly.hailxph49396.jpmart_app.ChucNang.SanPhamActivity;
 import fpoly.hailxph49396.jpmart_app.DAO.TaikhoanDAO;
 import fpoly.hailxph49396.jpmart_app.DTO.MenuDTO;
 import fpoly.hailxph49396.jpmart_app.DTO.TaikhoanDTO;
@@ -100,7 +103,7 @@ public class MenuActivity extends AppCompatActivity {
             listQuanLy.add(new MenuDTO("Khách hàng", R.drawable.dinosaur));
             listQuanLy.add(new MenuDTO("Hóa đơn", R.drawable.dinosaur));
             listQuanLy.add(new MenuDTO("Danh mục", R.drawable.dinosaur));
-            listQuanLy.add(new MenuDTO("Nhân viên", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Nhân viên", R.drawable.nv));
         } else {
             listQuanLy.add(new MenuDTO("Sản phẩm", R.drawable.dinosaur));
             listQuanLy.add(new MenuDTO("Khách hàng", R.drawable.dinosaur));
@@ -109,8 +112,8 @@ public class MenuActivity extends AppCompatActivity {
         }
 
         // Menu dùng chung
-        listNguoiDung.add(new MenuDTO("Đổi mật khẩu", R.drawable.dinosaur));
-        listNguoiDung.add(new MenuDTO("Đăng xuất", R.drawable.dinosaur));
+        listNguoiDung.add(new MenuDTO("Đổi mật khẩu", R.drawable.pass));
+        listNguoiDung.add(new MenuDTO("Đăng xuất", R.drawable.ic_logout));
 
         // Set adapter
         gridThongKe.setAdapter(new MenuAdapter(this, listThongKe));
@@ -125,7 +128,21 @@ public class MenuActivity extends AppCompatActivity {
 
         gridQuanLy.setOnItemClickListener((parent, view, position, id) -> {
             String title = listQuanLy.get(position).getTitle();
-            Toast.makeText(this, "Mở " + title, Toast.LENGTH_SHORT).show();
+            if (title.equals("Sản phẩm")) {
+//                startActivity(new Intent(MenuActivity.this, SanPhamActivity.class));
+            } else if (title.equals("Khách hàng")) {
+//                startActivity(new Intent(MenuActivity.this, KhachHangActivity.class));
+            } else if (title.equals("Hóa đơn")) {
+//                startActivity(new Intent(MenuActivity.this, HoaDonActivity.class));
+            } else if (title.equals("Danh mục")) {
+//                startActivity(new Intent(MenuActivity.this, DanhMucActivity.class));
+            } else if (title.equals("Nhân viên")) {
+                startActivity(new Intent(MenuActivity.this, NhanVienActivity.class));
+                finish();
+            } else {
+                Toast.makeText(this, "Mở " + title, Toast.LENGTH_SHORT).show();
+            }
+
         });
 
         gridNguoiDung.setOnItemClickListener((parent, view, position, id) -> {

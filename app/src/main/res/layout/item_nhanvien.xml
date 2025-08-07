@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="12dp">
+
+    <RelativeLayout
+        android:padding="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/bg_jpmart" />
+
+        <TextView
+            android:id="@+id/tvMaTen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/imgAvatar"
+            android:layout_marginStart="8dp"
+            android:text="NV001 - Nguyễn Văn A"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvDiaChi"
+            android:layout_below="@id/tvMaTen"
+            android:layout_toEndOf="@id/imgAvatar"
+            android:layout_marginStart="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="123 ABC, HCM" />
+
+        <TextView
+            android:id="@+id/tvLuong"
+            android:layout_below="@id/tvDiaChi"
+            android:layout_toEndOf="@id/imgAvatar"
+            android:layout_marginStart="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10.000.000 đ" />
+
+        <TextView
+            android:id="@+id/tvChucVu"
+            android:layout_below="@id/tvLuong"
+            android:layout_toEndOf="@id/imgAvatar"
+            android:layout_marginStart="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nhân viên" />
+
+        <ImageView
+            android:id="@+id/btnEdit"
+            android:layout_alignParentEnd="true"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="40dp"
+            android:src="@drawable/ic_edit_24" />
+
+        <ImageView
+            android:id="@+id/btnDelete"
+            android:layout_alignParentEnd="true"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_delete" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
