@@ -120,7 +120,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
         // Dữ liệu mẫu TAI_KHOAN
         db.execSQL("INSERT INTO TAI_KHOAN VALUES " +
-                "('admin', 'admin123', 'Hải', 'Lê Xuân', 'Nam', '0912345678', 'admin@example.com', 'Hà Nội')," +
+                "('admin', 'admin', 'Hải', 'Lê Xuân', 'Nam', '0912345678', 'admin@example.com', 'Hà Nội')," +
                 "('user01', 'pass01', 'Trang', 'Nguyễn Thị', 'Nữ', '0987654321', 'trang@example.com', 'Hồ Chí Minh')");
     }
 

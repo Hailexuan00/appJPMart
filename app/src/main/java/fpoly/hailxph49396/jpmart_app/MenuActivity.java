@@ -1,8 +1,8 @@
 package fpoly.hailxph49396.jpmart_app;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -20,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 
 import fpoly.hailxph49396.jpmart_app.Adapter.MenuAdapter;
+import fpoly.hailxph49396.jpmart_app.ChucNang.DoiMatKhauActivity;
 import fpoly.hailxph49396.jpmart_app.DAO.TaikhoanDAO;
 import fpoly.hailxph49396.jpmart_app.DTO.MenuDTO;
 import fpoly.hailxph49396.jpmart_app.DTO.TaikhoanDTO;
@@ -28,104 +29,124 @@ public class MenuActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private NavigationView navView;
-    private GridView gridView;
+    private GridView gridThongKe, gridQuanLy, gridNguoiDung;
     private TextView tvWelcome;
     private ActionBarDrawerToggle toggle;
-    private ArrayList<MenuDTO> menuList = new ArrayList<>();
-    private MenuAdapter adapter;
     private TaikhoanDAO dao;
 
-    @SuppressLint("MissingInflatedId")
+    private ArrayList<MenuDTO> listThongKe = new ArrayList<>();
+    private ArrayList<MenuDTO> listQuanLy = new ArrayList<>();
+    private ArrayList<MenuDTO> listNguoiDung = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        // Ánh xạ view
+        // Ánh xạ
         drawerLayout = findViewById(R.id.drawer_layout);
         navView = findViewById(R.id.nvView);
-        gridView = findViewById(R.id.gridView);
         tvWelcome = findViewById(R.id.tvWelcome);
+        gridThongKe = findViewById(R.id.gridThongKe);
+        gridQuanLy = findViewById(R.id.gridQuanLy);
+        gridNguoiDung = findViewById(R.id.gridNguoiDung);
 
-        // Ánh xạ toolbar và set SupportActionBar đầu tiên
+        // Toolbar setup
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Tạo toggle với toolbar để tự động quản lý hamburger icon
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                R.string.open, R.string.close);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Lấy action bar để set nút home (back/hamburger)
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         }
 
-        // DAO
+        // Khởi tạo DAO
         dao = new TaikhoanDAO(this);
 
-        // Nhận username từ Intent
+        // Lấy username từ Intent
         String username = getIntent().getStringExtra("username");
+        if (username == null) {
+            Toast.makeText(this, "Vui lòng đăng nhập lại", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }
+
+        // Lấy thông tin người dùng từ DAO
         TaikhoanDTO user = dao.getUserByUsername(username);
+        if (user == null) {
+            Log.e("MenuActivity", "User không tồn tại với username = " + username);
+            Toast.makeText(this, "Không tìm thấy tài khoản", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }
 
         // Hiển thị tên người dùng
-        if (user != null) {
-            tvWelcome.setText("Chào, " + user.getTen() + " (" + username + ")");
-        } else {
-            Toast.makeText(this, "Không tìm thấy tài khoản", Toast.LENGTH_SHORT).show();
-        }
+        tvWelcome.setText("Chào, " + user.getTen() + " (" + username + ")");
 
-        // Hiển thị menu theo vai trò
+        // Phân quyền hiển thị menu
         if ("admin".equals(username)) {
-            menuList.add(new MenuDTO("Quản lý tài khoản", R.drawable.dinosaur));
-            menuList.add(new MenuDTO("Quản lý sản phẩm", R.drawable.dinosaur));
-            menuList.add(new MenuDTO("Thống kê", R.drawable.dinosaur));
-            menuList.add(new MenuDTO("Đăng xuất", R.drawable.dinosaur));
+            listThongKe.add(new MenuDTO("Thống kê", R.drawable.dinosaur));
+            listThongKe.add(new MenuDTO("Top sản phẩm", R.drawable.dinosaur));
+            listThongKe.add(new MenuDTO("Top khách hàng", R.drawable.dinosaur));
+
+            listQuanLy.add(new MenuDTO("Sản phẩm", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Khách hàng", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Hóa đơn", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Danh mục", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Nhân viên", R.drawable.dinosaur));
         } else {
-            menuList.add(new MenuDTO("Xem sản phẩm", R.drawable.dinosaur));
-            menuList.add(new MenuDTO("Thông tin cá nhân", R.drawable.dinosaur));
-            menuList.add(new MenuDTO("Đăng xuất", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Sản phẩm", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Khách hàng", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Hóa đơn", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Danh mục", R.drawable.dinosaur));
         }
 
-        // Adapter
-        adapter = new MenuAdapter(this, menuList);
-        gridView.setAdapter(adapter);
+        // Menu dùng chung
+        listNguoiDung.add(new MenuDTO("Đổi mật khẩu", R.drawable.dinosaur));
+        listNguoiDung.add(new MenuDTO("Đăng xuất", R.drawable.dinosaur));
 
-        // Xử lý click item menu
-        gridView.setOnItemClickListener((parent, view, position, id) -> {
-            String title = menuList.get(position).getTitle();
-            switch (title) {
-                case "Đăng xuất":
-                    startActivity(new Intent(MenuActivity.this, LoginActivity.class));
-                    finish();
-                    break;
-                case "Quản lý tài khoản":
-                    Toast.makeText(this, "Mở màn hình Quản lý tài khoản", Toast.LENGTH_SHORT).show();
-                    break;
-                case "Xem sản phẩm":
-                case "Quản lý sản phẩm":
-                    Toast.makeText(this, "Mở màn hình Sản phẩm", Toast.LENGTH_SHORT).show();
-                    break;
-                case "Thống kê":
-                    Toast.makeText(this, "Mở màn hình Thống kê", Toast.LENGTH_SHORT).show();
-                    break;
-                case "Thông tin cá nhân":
-                    Toast.makeText(this, "Mở màn hình thông tin cá nhân", Toast.LENGTH_SHORT).show();
-                    break;
+        // Set adapter
+        gridThongKe.setAdapter(new MenuAdapter(this, listThongKe));
+        gridQuanLy.setAdapter(new MenuAdapter(this, listQuanLy));
+        gridNguoiDung.setAdapter(new MenuAdapter(this, listNguoiDung));
+
+        // Xử lý click GridView
+        gridThongKe.setOnItemClickListener((parent, view, position, id) -> {
+            String title = listThongKe.get(position).getTitle();
+            Toast.makeText(this, "Mở " + title, Toast.LENGTH_SHORT).show();
+        });
+
+        gridQuanLy.setOnItemClickListener((parent, view, position, id) -> {
+            String title = listQuanLy.get(position).getTitle();
+            Toast.makeText(this, "Mở " + title, Toast.LENGTH_SHORT).show();
+        });
+
+        gridNguoiDung.setOnItemClickListener((parent, view, position, id) -> {
+            String title = listNguoiDung.get(position).getTitle();
+            if (title.equals("Đăng xuất")) {
+                startActivity(new Intent(MenuActivity.this, LoginActivity.class));
+                finish();
+            } else if (title.equals("Đổi mật khẩu")) {
+                startActivity(new Intent(MenuActivity.this, DoiMatKhauActivity.class));
+            } else {
+                Toast.makeText(this, "Mở " + title, Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Xử lý click item NavigationView nếu cần
+        // Navigation Drawer (nếu dùng)
         navView.setNavigationItemSelectedListener(item -> {
             drawerLayout.closeDrawers();
             return true;
         });
     }
 
-    // Xử lý toggle mở/đóng drawer khi bấm nút trên toolbar
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return toggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);

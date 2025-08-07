@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -105,4 +106,24 @@ public class TaikhoanDAO {
         int result = db.delete("TAI_KHOAN", "username = ?", new String[]{username});
         return result > 0;
     }
+
+    public boolean doiMatKhau(String username, String oldPass, String newPass) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM TAI_KHOAN WHERE username = ? AND password = ?", new String[]{username, oldPass});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            ContentValues values = new ContentValues();
+            values.put("password", newPass);
+            int result = db.update("TAI_KHOAN", values, "username = ?", new String[]{username});
+            cursor.close();
+            Log.d("DOI_MK", "Cập nhật thành công");
+            return result > 0;
+        }
+
+        Log.d("DOI_MK", "Sai mật khẩu hoặc username: " + username + ", " + oldPass);
+        if (cursor != null) cursor.close();
+        return false;
+    }
+
+
 }

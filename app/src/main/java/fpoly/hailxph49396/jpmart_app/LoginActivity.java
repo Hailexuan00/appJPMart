@@ -24,7 +24,6 @@ public class LoginActivity extends AppCompatActivity {
     CheckBox chkRemember;
     Button btnLogin;
     SharedPreferences sharedPreferences;
-
     TaikhoanDAO dao;
 
     @SuppressLint("MissingInflatedId")
@@ -34,21 +33,27 @@ public class LoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
+        // Ánh xạ view
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
         chkRemember = findViewById(R.id.chkRemember);
         btnLogin = findViewById(R.id.btnLogin);
 
+        // Khởi tạo DAO và SharedPreferences
         dao = new TaikhoanDAO(this);
         sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+
+        // Load dữ liệu nếu trước đó đã chọn "Ghi nhớ đăng nhập"
         loadSavedLogin();
 
+        // Xử lý insets cho thiết bị có tai thỏ
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
+        // Bắt sự kiện đăng nhập
         btnLogin.setOnClickListener(view -> {
             String user = edtUsername.getText().toString().trim();
             String pass = edtPassword.getText().toString().trim();
@@ -60,18 +65,24 @@ public class LoginActivity extends AppCompatActivity {
 
             boolean isValid = dao.checkLogin(user, pass);
             if (isValid) {
+                // Nếu chọn ghi nhớ thì lưu cả username và password
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("username", user);
                 if (chkRemember.isChecked()) {
-                    sharedPreferences.edit()
-                            .putString("username", user)
-                            .putString("password", pass)
-                            .putBoolean("remember", true)
-                            .apply();
+                    editor.putString("password", pass);
+                    editor.putBoolean("remember", true);
                 } else {
-                    sharedPreferences.edit().clear().apply();
+                    editor.remove("password");
+                    editor.putBoolean("remember", false);
                 }
+                editor.apply();
 
                 Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, MenuActivity.class));
+
+                // Truyền username sang MenuActivity
+                Intent intent = new Intent(this, MenuActivity.class);
+                intent.putExtra("username", user);
+                startActivity(intent);
                 finish();
             } else {
                 Toast.makeText(this, "Sai tài khoản hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
@@ -79,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    // Hàm tải lại thông tin đã lưu (nếu có)
     private void loadSavedLogin() {
         boolean remember = sharedPreferences.getBoolean("remember", false);
         if (remember) {

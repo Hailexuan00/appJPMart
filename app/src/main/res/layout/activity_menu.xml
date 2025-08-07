@@ -1,45 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:add="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
+    <!-- Main content -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Toolbar -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+        <!-- Welcome text -->
         <TextView
             android:id="@+id/tvWelcome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="5dp"
             android:text="Xin chào"
-            android:textSize="18sp" />
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-        <GridView
-            android:id="@+id/gridView"
+        <!-- Optional image banner -->
+        <ImageView
+            android:id="@+id/bannerImage"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_jpmart" />
+
+        <!-- Group: Thống kê -->
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:numColumns="2"
+            android:text="Thống kê"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingStart="16dp"
+            android:paddingTop="12dp" />
+
+        <GridView
+            android:id="@+id/gridThongKe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="3"
+            android:padding="8dp"
             android:horizontalSpacing="16dp"
             android:verticalSpacing="16dp"
-            android:padding="16dp" />
+            android:stretchMode="columnWidth"
+            android:scrollbars="none" />
+
+        <!-- Group: Quản lý -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quản lý"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingStart="16dp"
+            android:paddingTop="12dp" />
+
+        <GridView
+            android:id="@+id/gridQuanLy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="3"
+            android:padding="8dp"
+            android:horizontalSpacing="16dp"
+            android:verticalSpacing="16dp"
+            android:stretchMode="columnWidth"
+            android:scrollbars="none" />
+
+        <!-- Group: Người dùng -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Người dùng"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingStart="16dp"
+            android:paddingTop="12dp" />
+
+        <GridView
+            android:id="@+id/gridNguoiDung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="3"
+            android:padding="8dp"
+            android:horizontalSpacing="16dp"
+            android:verticalSpacing="16dp"
+            android:stretchMode="columnWidth"
+            android:scrollbars="none" />
 
     </LinearLayout>
 
+    <!-- Navigation Drawer -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nvView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:background="@android:color/white" />
+        add:menu="@menu/drawer_view"
+        add:headerLayout="@layout/nav_header"
+        android:background="@android:color/white"
+        android:fitsSystemWindows="true" />
+
 </androidx.drawerlayout.widget.DrawerLayout>

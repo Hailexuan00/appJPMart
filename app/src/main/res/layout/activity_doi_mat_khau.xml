@@ -1,10 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChucNang.DoiMatKhauActivity">
+    android:background="#FFFFFF">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#9C27B0"
+        android:minHeight="?attr/actionBarSize"
+        app:title="Đổi mật khẩu"
+        app:titleTextColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Image -->
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/pass"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Mật khẩu cũ -->
+    <EditText
+        android:id="@+id/edt_old_pass"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="24dp"
+        android:background="@drawable/bg_edittext"
+        android:hint="Mật khẩu cũ"
+        android:padding="12dp"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@id/img_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Mật khẩu mới -->
+    <EditText
+        android:id="@+id/edt_new_pass"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="24dp"
+        android:background="@drawable/bg_edittext"
+        android:hint="Mật khẩu mới"
+        android:padding="12dp"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@id/edt_old_pass"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Nhập lại mật khẩu mới -->
+    <EditText
+        android:id="@+id/edt_confirm_pass"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="24dp"
+        android:background="@drawable/bg_edittext"
+        android:hint="Nhập lại mật khẩu mới"
+        android:padding="12dp"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@id/edt_new_pass"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Nút Lưu -->
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Lưu"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#03A9F4"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/edt_confirm_pass"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_cancel"
+        app:layout_constraintHorizontal_chainStyle="spread" />
+
+    <!-- Nút Hủy -->
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Hủy"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#03A9F4"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/edt_confirm_pass"
+        app:layout_constraintStart_toEndOf="@id/btn_save"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
