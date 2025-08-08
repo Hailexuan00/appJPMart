@@ -23,6 +23,7 @@ import fpoly.hailxph49396.jpmart_app.Adapter.MenuAdapter;
 import fpoly.hailxph49396.jpmart_app.ChucNang.DanhMucActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.DoiMatKhauActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.HoaDonActivity;
+import fpoly.hailxph49396.jpmart_app.ChucNang.KhachHangActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.NhanVienActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.SanPhamActivity;
 import fpoly.hailxph49396.jpmart_app.DAO.TaikhoanDAO;
@@ -101,13 +102,13 @@ public class MenuActivity extends AppCompatActivity {
             listThongKe.add(new MenuDTO("Top khách hàng", R.drawable.dinosaur));
 
             listQuanLy.add(new MenuDTO("Sản phẩm", R.drawable.dinosaur));
-            listQuanLy.add(new MenuDTO("Khách hàng", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Khách hàng", R.drawable.khach));
             listQuanLy.add(new MenuDTO("Hóa đơn", R.drawable.dinosaur));
             listQuanLy.add(new MenuDTO("Danh mục", R.drawable.danhmuc));
             listQuanLy.add(new MenuDTO("Nhân viên", R.drawable.nv));
         } else {
             listQuanLy.add(new MenuDTO("Sản phẩm", R.drawable.dinosaur));
-            listQuanLy.add(new MenuDTO("Khách hàng", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Khách hàng", R.drawable.khach));
             listQuanLy.add(new MenuDTO("Hóa đơn", R.drawable.dinosaur));
             listQuanLy.add(new MenuDTO("Danh mục", R.drawable.danhmuc));
         }
@@ -132,7 +133,8 @@ public class MenuActivity extends AppCompatActivity {
             if (title.equals("Sản phẩm")) {
 //                startActivity(new Intent(MenuActivity.this, SanPhamActivity.class));
             } else if (title.equals("Khách hàng")) {
-//                startActivity(new Intent(MenuActivity.this, KhachHangActivity.class));
+                startActivity(new Intent(MenuActivity.this, KhachHangActivity.class));
+                finish();
             } else if (title.equals("Hóa đơn")) {
 //                startActivity(new Intent(MenuActivity.this, HoaDonActivity.class));
             } else if (title.equals("Danh mục")) {
