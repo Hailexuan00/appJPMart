@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imgSP"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/bg_jpmart"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingStart="8dp">
+
+        <TextView
+            android:id="@+id/tvTenSP"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tvGiaSP"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tvTonKho"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/btnEditSP"
+        android:src="@drawable/ic_edit_24"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="4dp"/>
+
+    <ImageView
+        android:id="@+id/btnDeleteSP"
+        android:src="@drawable/ic_delete"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="4dp"/>
+</LinearLayout>

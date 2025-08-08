@@ -20,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 
 import fpoly.hailxph49396.jpmart_app.Adapter.MenuAdapter;
+import fpoly.hailxph49396.jpmart_app.ChucNang.DanhMucActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.DoiMatKhauActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.HoaDonActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.NhanVienActivity;
@@ -102,13 +103,13 @@ public class MenuActivity extends AppCompatActivity {
             listQuanLy.add(new MenuDTO("Sản phẩm", R.drawable.dinosaur));
             listQuanLy.add(new MenuDTO("Khách hàng", R.drawable.dinosaur));
             listQuanLy.add(new MenuDTO("Hóa đơn", R.drawable.dinosaur));
-            listQuanLy.add(new MenuDTO("Danh mục", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Danh mục", R.drawable.danhmuc));
             listQuanLy.add(new MenuDTO("Nhân viên", R.drawable.nv));
         } else {
             listQuanLy.add(new MenuDTO("Sản phẩm", R.drawable.dinosaur));
             listQuanLy.add(new MenuDTO("Khách hàng", R.drawable.dinosaur));
             listQuanLy.add(new MenuDTO("Hóa đơn", R.drawable.dinosaur));
-            listQuanLy.add(new MenuDTO("Danh mục", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Danh mục", R.drawable.danhmuc));
         }
 
         // Menu dùng chung
@@ -135,7 +136,8 @@ public class MenuActivity extends AppCompatActivity {
             } else if (title.equals("Hóa đơn")) {
 //                startActivity(new Intent(MenuActivity.this, HoaDonActivity.class));
             } else if (title.equals("Danh mục")) {
-//                startActivity(new Intent(MenuActivity.this, DanhMucActivity.class));
+                startActivity(new Intent(MenuActivity.this, DanhMucActivity.class));
+                finish();
             } else if (title.equals("Nhân viên")) {
                 startActivity(new Intent(MenuActivity.this, NhanVienActivity.class));
                 finish();

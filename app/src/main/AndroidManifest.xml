@@ -13,6 +13,9 @@
         android:theme="@style/Theme.JPMart_app"
         tools:targetApi="31">
         <activity
+            android:name=".ChucNang.DanhMucActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChucNang.NhanVienActivity"
             android:exported="false" />
         <activity
