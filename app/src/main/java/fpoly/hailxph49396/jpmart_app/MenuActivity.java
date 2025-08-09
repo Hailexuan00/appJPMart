@@ -25,6 +25,7 @@ import fpoly.hailxph49396.jpmart_app.ChucNang.DoiMatKhauActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.HoaDonActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.KhachHangActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.NhanVienActivity;
+
 import fpoly.hailxph49396.jpmart_app.ChucNang.SanPhamActivity;
 import fpoly.hailxph49396.jpmart_app.DAO.TaikhoanDAO;
 import fpoly.hailxph49396.jpmart_app.DTO.MenuDTO;
@@ -101,13 +102,13 @@ public class MenuActivity extends AppCompatActivity {
             listThongKe.add(new MenuDTO("Top sản phẩm", R.drawable.dinosaur));
             listThongKe.add(new MenuDTO("Top khách hàng", R.drawable.dinosaur));
 
-            listQuanLy.add(new MenuDTO("Sản phẩm", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Sản phẩm", R.drawable.sanpham));
             listQuanLy.add(new MenuDTO("Khách hàng", R.drawable.khach));
             listQuanLy.add(new MenuDTO("Hóa đơn", R.drawable.dinosaur));
             listQuanLy.add(new MenuDTO("Danh mục", R.drawable.danhmuc));
             listQuanLy.add(new MenuDTO("Nhân viên", R.drawable.nv));
         } else {
-            listQuanLy.add(new MenuDTO("Sản phẩm", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Sản phẩm", R.drawable.sanpham));
             listQuanLy.add(new MenuDTO("Khách hàng", R.drawable.khach));
             listQuanLy.add(new MenuDTO("Hóa đơn", R.drawable.dinosaur));
             listQuanLy.add(new MenuDTO("Danh mục", R.drawable.danhmuc));
@@ -131,7 +132,8 @@ public class MenuActivity extends AppCompatActivity {
         gridQuanLy.setOnItemClickListener((parent, view, position, id) -> {
             String title = listQuanLy.get(position).getTitle();
             if (title.equals("Sản phẩm")) {
-//                startActivity(new Intent(MenuActivity.this, SanPhamActivity.class));
+                startActivity(new Intent(MenuActivity.this, SanPhamActivity.class));
+                finish();
             } else if (title.equals("Khách hàng")) {
                 startActivity(new Intent(MenuActivity.this, KhachHangActivity.class));
                 finish();

@@ -4,81 +4,83 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import fpoly.hailxph49396.jpmart_app.ChucNang.SanPhamActivity;
-import fpoly.hailxph49396.jpmart_app.DAO.SanPhamDAO;
 import fpoly.hailxph49396.jpmart_app.DTO.SanPhamDTO;
 import fpoly.hailxph49396.jpmart_app.R;
 
 public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHolder> {
-    private Context context;
-    private ArrayList<SanPhamDTO> list;
-    private SanPhamDAO dao;
 
-    public SanPhamAdapter(Context context, ArrayList<SanPhamDTO> list, SanPhamDAO dao) {
+    private final Context context;
+    private ArrayList<SanPhamDTO> list;
+
+    public interface OnSanPhamClickListener {
+        void onAddToCart(SanPhamDTO sanPham);
+        void onEdit(SanPhamDTO sanPham);
+        void onDelete(SanPhamDTO sanPham);
+    }
+
+    private final OnSanPhamClickListener listener;
+
+    public SanPhamAdapter(Context context, ArrayList<SanPhamDTO> list, OnSanPhamClickListener listener) {
         this.context = context;
         this.list = list;
-        this.dao = dao;
+        this.listener = listener;
+    }
+
+    public void setData(ArrayList<SanPhamDTO> newList) {
+        this.list = newList;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SanPhamAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_san_pham, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder h, int position) {
+    public void onBindViewHolder(@NonNull SanPhamAdapter.ViewHolder holder, int position) {
         SanPhamDTO sp = list.get(position);
-        h.tvTen.setText(sp.getTenSanPham());
-        h.tvGia.setText(String.format("%,d đ", sp.getGia()));
-        h.tvTon.setText("Tồn kho: " + sp.getSoLuong());
+        holder.tvTenSP.setText(sp.getTenSanPham());
+        holder.tvGia.setText(String.valueOf(sp.getGia()) + " đ");
 
-        h.btnDelete.setOnClickListener(v -> {
-            new AlertDialog.Builder(context)
-                    .setTitle("Xóa sản phẩm")
-                    .setMessage("Bạn có chắc muốn xóa?")
-                    .setPositiveButton("Xóa", (d, i) -> {
-                        dao.delete(sp.getMaSanPham());
-                        list.remove(position);
-                        notifyItemRemoved(position);
-                    })
-                    .setNegativeButton("Hủy", null)
-                    .show();
+        holder.btnAddCart.setOnClickListener(v -> {
+            if (listener != null) listener.onAddToCart(sp);
         });
 
-//        h.btnEdit.setOnClickListener(v -> {
-//            if (context instanceof SanPhamActivity) {
-//                ((SanPhamActivity) context).openDialog(sp);
-//            }
-//        });
+        holder.btnEdit.setOnClickListener(v -> {
+            if (listener != null) listener.onEdit(sp);
+        });
+        holder.btnDelete.setOnClickListener(v -> {
+            if (listener != null) listener.onDelete(sp);
+        });
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return list != null ? list.size() : 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTen, tvGia, tvTon;
-        ImageView btnEdit, btnDelete;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvTenSP, tvGia;
+        ImageButton btnAddCart, btnEdit, btnDelete;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTen = itemView.findViewById(R.id.tvTenSP);
+            tvTenSP = itemView.findViewById(R.id.tvTenSP);
             tvGia = itemView.findViewById(R.id.tvGiaSP);
-            tvTon = itemView.findViewById(R.id.tvTonKho);
-            btnEdit = itemView.findViewById(R.id.btnEditSP);
-            btnDelete = itemView.findViewById(R.id.btnDeleteSP);
+            btnAddCart = itemView.findViewById(R.id.btnAddCart);
+            btnEdit = itemView.findViewById(R.id.btnEdit);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
 }
-

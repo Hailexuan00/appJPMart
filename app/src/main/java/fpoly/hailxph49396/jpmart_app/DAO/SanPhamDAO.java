@@ -7,35 +7,38 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
-import fpoly.hailxph49396.jpmart_app.DTO.SanPhamDTO;
 import fpoly.hailxph49396.jpmart_app.Database.DbHelper;
+import fpoly.hailxph49396.jpmart_app.DTO.SanPhamDTO;
 
 public class SanPhamDAO {
     private SQLiteDatabase db;
 
     public SanPhamDAO(Context context) {
-        DbHelper dbHelper = new DbHelper(context);
-        db = dbHelper.getWritableDatabase();
+        DbHelper helper = new DbHelper(context);
+        db = helper.getWritableDatabase();
     }
 
-    public ArrayList<SanPhamDTO> getAll() {
+    public ArrayList<SanPhamDTO> getAllSanPham() {
         ArrayList<SanPhamDTO> list = new ArrayList<>();
-        Cursor c = db.rawQuery("SELECT * FROM SAN_PHAM", null);
-        while (c.moveToNext()) {
-            list.add(new SanPhamDTO(
-                    c.getString(0),
-                    c.getString(1),
-                    c.getInt(2),
-                    c.getInt(3),
-                    c.getString(4),
-                    c.getString(5),
-                    c.getString(6)
-            ));
+        Cursor c = db.rawQuery("SELECT MaSanPham, TenSanPham, Gia, SoLuong, DonViTinh, NgayNhap, MaDanhMuc FROM SAN_PHAM", null);
+        if (c.moveToFirst()) {
+            do {
+                SanPhamDTO sp = new SanPhamDTO();
+                sp.setMaSanPham(c.getString(0));
+                sp.setTenSanPham(c.getString(1));
+                sp.setGia(c.getInt(2));
+                sp.setSoLuong(c.getInt(3));
+                sp.setDonViTinh(c.getString(4));
+                sp.setNgayNhap(c.getString(5));
+                sp.setMaDanhMuc(c.getString(6));
+                list.add(sp);
+            } while (c.moveToNext());
         }
+        c.close();
         return list;
     }
 
-    public long insert(SanPhamDTO sp) {
+    public boolean themSanPham(SanPhamDTO sp) {
         ContentValues values = new ContentValues();
         values.put("MaSanPham", sp.getMaSanPham());
         values.put("TenSanPham", sp.getTenSanPham());
@@ -44,10 +47,11 @@ public class SanPhamDAO {
         values.put("DonViTinh", sp.getDonViTinh());
         values.put("NgayNhap", sp.getNgayNhap());
         values.put("MaDanhMuc", sp.getMaDanhMuc());
-        return db.insert("SAN_PHAM", null, values);
+        long row = db.insert("SAN_PHAM", null, values);
+        return row > 0;
     }
 
-    public int update(SanPhamDTO sp) {
+    public boolean suaSanPham(SanPhamDTO sp) {
         ContentValues values = new ContentValues();
         values.put("TenSanPham", sp.getTenSanPham());
         values.put("Gia", sp.getGia());
@@ -55,11 +59,34 @@ public class SanPhamDAO {
         values.put("DonViTinh", sp.getDonViTinh());
         values.put("NgayNhap", sp.getNgayNhap());
         values.put("MaDanhMuc", sp.getMaDanhMuc());
-        return db.update("SAN_PHAM", values, "MaSanPham=?", new String[]{sp.getMaSanPham()});
+        int row = db.update("SAN_PHAM", values, "MaSanPham = ?", new String[]{sp.getMaSanPham()});
+        return row > 0;
     }
 
-    public int delete(String ma) {
-        return db.delete("SAN_PHAM", "MaSanPham=?", new String[]{ma});
+    public boolean xoaSanPham(String maSanPham) {
+        int row = db.delete("SAN_PHAM", "MaSanPham = ?", new String[]{maSanPham});
+        return row > 0;
+    }
+
+    public ArrayList<SanPhamDTO> timKiemSanPham(String keyword) {
+        ArrayList<SanPhamDTO> list = new ArrayList<>();
+        if (keyword == null) keyword = "";
+        String q = "SELECT MaSanPham, TenSanPham, Gia, SoLuong, DonViTinh, NgayNhap, MaDanhMuc FROM SAN_PHAM WHERE TenSanPham LIKE ? OR MaSanPham LIKE ?";
+        Cursor c = db.rawQuery(q, new String[]{"%" + keyword + "%", "%" + keyword + "%"});
+        if (c.moveToFirst()) {
+            do {
+                SanPhamDTO sp = new SanPhamDTO();
+                sp.setMaSanPham(c.getString(0));
+                sp.setTenSanPham(c.getString(1));
+                sp.setGia(c.getInt(2));
+                sp.setSoLuong(c.getInt(3));
+                sp.setDonViTinh(c.getString(4));
+                sp.setNgayNhap(c.getString(5));
+                sp.setMaDanhMuc(c.getString(6));
+                list.add(sp);
+            } while (c.moveToNext());
+        }
+        c.close();
+        return list;
     }
 }
-

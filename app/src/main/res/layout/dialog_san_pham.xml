@@ -1,57 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:layout_height="wrap_content">
 
     <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/edMaSP"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Mã sản phẩm" />
+            android:text="Danh mục" />
+
+        <Spinner
+            android:id="@+id/spDanhMuc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên SP" />
 
         <EditText
             android:id="@+id/edTenSP"
+            android:hint="Tên sản phẩm"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Tên sản phẩm" />
+            android:text="Giá" />
 
         <EditText
-            android:id="@+id/edGiaSP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:hint="Giá" />
-
-        <EditText
-            android:id="@+id/edSoLuongSP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/edGia"
+            android:hint="Giá"
             android:inputType="number"
-            android:hint="Số lượng" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số lượng" />
 
         <EditText
-            android:id="@+id/edMaDanhMucSP"
+            android:id="@+id/edSoLuong"
+            android:hint="Số lượng"
+            android:inputType="number"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Mã danh mục" />
+            android:text="Đơn vị tính" />
 
         <EditText
-            android:id="@+id/edAnhSP"
+            android:id="@+id/edDonViTinh"
+            android:hint="Đơn vị tính"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Link ảnh" />
+            android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/btnSaveSP"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ngày nhập" />
+
+        <EditText
+            android:id="@+id/edNgayNhap"
+            android:hint="YYYY-MM-DD"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Lưu" />
-
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </ScrollView>

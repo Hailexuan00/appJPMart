@@ -17,6 +17,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String TABLE_SAN_PHAM = "SanPham";
     public static final String TABLE_HOA_DON = "HoaDon";
     public static final String TABLE_CHI_TIET_HOA_DON = "ChiTietHoaDon";
+    public static final String TABLE_GIO_HANG = "GioHang";
 
     public DbHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -88,6 +89,16 @@ public class DbHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY (MaSanPham) REFERENCES SAN_PHAM(MaSanPham))");
 
 
+        db.execSQL("CREATE TABLE TABLE_GIO_HANG (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "MaSanPham TEXT NOT NULL, " +
+                "TenSanPham TEXT NOT NULL, " +
+                "SoLuong INTEGER NOT NULL, " +
+                "Gia INTEGER NOT NULL, " +
+                "FOREIGN KEY (MaSanPham) REFERENCES SAN_PHAM(MaSanPham))");
+
+
+
         // Dữ liệu mẫu KHACH_HANG
         db.execSQL("INSERT INTO KHACH_HANG VALUES " +
                 "('KH01', 'Nguyễn Văn A', 'Hà Nội', '0901234567', 'vana@gmail.com')," +
@@ -133,6 +144,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS DANH_MUC");
         db.execSQL("DROP TABLE IF EXISTS NHAN_VIEN");
         db.execSQL("DROP TABLE IF EXISTS KHACH_HANG");
+        db.execSQL("DROP TABLE IF EXISTS TABLE_GIO_HANG");
         onCreate(db);
     }
 }

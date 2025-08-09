@@ -9,6 +9,9 @@ public class SanPhamDTO {
     private String ngayNhap;
     private String maDanhMuc;
 
+    public SanPhamDTO() {
+    }
+
     public SanPhamDTO(String maSanPham, String tenSanPham, int gia, int soLuong, String donViTinh, String ngayNhap, String maDanhMuc) {
         this.maSanPham = maSanPham;
         this.tenSanPham = tenSanPham;
@@ -18,10 +21,6 @@ public class SanPhamDTO {
         this.ngayNhap = ngayNhap;
         this.maDanhMuc = maDanhMuc;
     }
-
-    public SanPhamDTO() {}
-
-    // getter setter
 
     public String getMaSanPham() {
         return maSanPham;
