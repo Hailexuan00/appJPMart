@@ -24,13 +24,11 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHold
     private GioHangDAO gioHangDAO;
     private OnCartChangeListener listener;
 
-    // Interface callback để thông báo khi giỏ hàng thay đổi
     public interface OnCartChangeListener {
         void onCartUpdated();
     }
 
-    // Constructor chính
-    public GioHangAdapter(Context context, ArrayList<GioHangDTO> list, OnCartChangeListener listener) {
+    public GioHangAdapter(Context context, ArrayList<GioHangDTO> list, GioHangDAO gioHangDAO, OnCartChangeListener listener) {
         this.context = context;
         this.list = (list != null) ? list : new ArrayList<>();
         this.listener = listener;
@@ -58,9 +56,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHold
             item.setSoLuong(soLuongMoi);
             gioHangDAO.updateSoLuong(item.getId(), soLuongMoi);
             notifyItemChanged(position);
-            if (listener != null) {
-                listener.onCartUpdated();
-            }
+            if (listener != null) listener.onCartUpdated();
         });
 
         holder.btnGiam.setOnClickListener(v -> {
@@ -69,9 +65,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHold
                 item.setSoLuong(soLuongMoi);
                 gioHangDAO.updateSoLuong(item.getId(), soLuongMoi);
                 notifyItemChanged(position);
-                if (listener != null) {
-                    listener.onCartUpdated();
-                }
+                if (listener != null) listener.onCartUpdated();
             }
         });
 
@@ -79,9 +73,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHold
             gioHangDAO.delete(item.getId());
             list.remove(position);
             notifyItemRemoved(position);
-            if (listener != null) {
-                listener.onCartUpdated();
-            }
+            if (listener != null) listener.onCartUpdated();
         });
     }
 

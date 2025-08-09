@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    card_view:cardCornerRadius="8dp"
+    card_view:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <!-- Nội dung hóa đơn -->
+        <LinearLayout
+            android:id="@+id/layoutText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/btnDelete"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvMaHD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mã hóa đơn: HD001"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvTenNV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên nhân viên: Nguyễn Văn An"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvTenKH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên khách hàng: Nặc danh"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvNgayLap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ngày lập: 2024-01-05"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvTongTien"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tổng tiền: 7860000"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- Nút xóa -->
+        <ImageView
+            android:id="@+id/btnDelete"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="Xóa hóa đơn"
+            android:padding="4dp"
+            android:src="@android:drawable/ic_menu_delete"
+            android:tint="@android:color/holo_red_dark" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

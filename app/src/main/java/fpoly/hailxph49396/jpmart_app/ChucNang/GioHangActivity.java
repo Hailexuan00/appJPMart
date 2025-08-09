@@ -1,12 +1,14 @@
 package fpoly.hailxph49396.jpmart_app.ChucNang;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,69 +23,74 @@ import fpoly.hailxph49396.jpmart_app.R;
 
 public class GioHangActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
+    private Toolbar toolbar;
     private TextView tvTongTien;
+    private RecyclerView rcvGioHang;
     private Button btnThanhToan;
 
     private GioHangDAO gioHangDAO;
-    private ArrayList<GioHangDTO> listGioHang;
     private GioHangAdapter adapter;
+    private ArrayList<GioHangDTO> listGioHang;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gio_hang);
+        setContentView(R.layout.activity_gio_hang); // tên file XML bạn gửi
 
         // Ánh xạ view
-        recyclerView = findViewById(R.id.rcvGioHang);
+        toolbar = findViewById(R.id.toolbar);
         tvTongTien = findViewById(R.id.tvTongTien);
+        rcvGioHang = findViewById(R.id.rcvGioHang);
         btnThanhToan = findViewById(R.id.btnThanhToan);
 
-        // Khởi tạo DAO và lấy dữ liệu
+        // Setup Toolbar
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Khởi tạo DAO và load dữ liệu
         gioHangDAO = new GioHangDAO(this);
-        listGioHang = gioHangDAO.getAll();
+        loadData();
 
-        // Thiết lập RecyclerView với LayoutManager
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Tạo adapter với constructor đúng
-        adapter = new GioHangAdapter(this, listGioHang, new GioHangAdapter.OnCartChangeListener() {
-            @Override
-            public void onCartUpdated() {
-                capNhatTongTien();
-            }
-        });
-        recyclerView.setAdapter(adapter);
-
-        // Cập nhật tổng tiền ban đầu
-        capNhatTongTien();
-
-        // Xử lý nút thanh toán
+        // Sự kiện thanh toán
         btnThanhToan.setOnClickListener(v -> {
-            if (listGioHang == null || listGioHang.isEmpty()) {
-                Toast.makeText(GioHangActivity.this, "Giỏ hàng trống!", Toast.LENGTH_SHORT).show();
+            if (listGioHang.isEmpty()) {
+                Toast.makeText(this, "Giỏ hàng trống!", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(GioHangActivity.this, "Thanh toán thành công!", Toast.LENGTH_SHORT).show();
-                // Xóa giỏ hàng sau khi thanh toán
-                gioHangDAO.clearGioHang();
-                listGioHang.clear();
-                adapter.notifyDataSetChanged();
-                capNhatTongTien();
+                boolean check = gioHangDAO.thanhToan();
+                if (check) {
+                    Toast.makeText(this, "Thanh toán thành công!", Toast.LENGTH_SHORT).show();
+                    loadData();
+                } else {
+                    Toast.makeText(this, "Thanh toán thất bại!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    // Hàm tính và cập nhật tổng tiền
-    private void capNhatTongTien() {
-        int tong = 0;
-        if (listGioHang != null) {
-            for (GioHangDTO item : listGioHang) {
-                tong += item.getGia() * item.getSoLuong();
-            }
+    private void loadData() {
+        listGioHang = gioHangDAO.getAll();
+        adapter = new GioHangAdapter(this, listGioHang, gioHangDAO, this::updateTongTien);
+        rcvGioHang.setLayoutManager(new LinearLayoutManager(this));
+        rcvGioHang.setAdapter(adapter);
+        updateTongTien();
+    }
+
+    private void updateTongTien() {
+        double tongTien = 0;
+        for (GioHangDTO gh : listGioHang) {
+            tongTien += gh.getSoLuong() * gh.getGia();
         }
-        // Định dạng VNĐ
         NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-        tvTongTien.setText("Tổng: " + format.format(tong));
+        tvTongTien.setText("Tổng tiền: " + format.format(tongTien));
+    }
+
+    // Xử lý nút back trên Toolbar
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

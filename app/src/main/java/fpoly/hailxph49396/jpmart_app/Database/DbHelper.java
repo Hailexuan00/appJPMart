@@ -9,7 +9,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "JPMart.db";
     public static final int DB_VERSION = 1;
 
-    // Table names
+//     Table names
     public static final String TABLE_TAI_KHOAN = "TaiKhoan";
     public static final String KHACH_HANG = "KhachHang";
     public static final String TABLE_NHAN_VIEN = "NhanVien";
@@ -70,7 +70,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
         // HOA_DON
         db.execSQL("CREATE TABLE HOA_DON (" +
-                "MaHoaDon TEXT PRIMARY KEY NOT NULL, " +
+                "MaHoaDon INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "MaKhachHang TEXT NOT NULL, " +
                 "MaNhanVien TEXT NOT NULL, " +
                 "NgayLap TEXT NOT NULL, " +
@@ -89,15 +89,19 @@ public class DbHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY (MaSanPham) REFERENCES SAN_PHAM(MaSanPham))");
 
 
-        db.execSQL("CREATE TABLE TABLE_GIO_HANG (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        db.execSQL("CREATE TABLE GIO_HANG (" +
+                "id INTEGER PRIMARY KEY NOT NULL, " +
+                "MaKhachHang TEXT, " +
+                "MaNhanVien TEXT, " +
                 "MaSanPham TEXT NOT NULL, " +
                 "TenSanPham TEXT NOT NULL, " +
                 "SoLuong INTEGER NOT NULL, " +
                 "Gia INTEGER NOT NULL, " +
                 "DonViTinh TEXT, " +
                 "NgayNhap TEXT, " +
-                "FOREIGN KEY (MaSanPham) REFERENCES SAN_PHAM(MaSanPham))");
+                "FOREIGN KEY (MaSanPham) REFERENCES SAN_PHAM(MaSanPham)," +
+                "FOREIGN KEY (MaKhachHang) REFERENCES KHACH_HANG(MaKhachHang)," +
+                "FOREIGN KEY (MaNhanVien) REFERENCES NHAN_VIEN(MaNhanVien))");
 
 
         // Dữ liệu mẫu KHACH_HANG
@@ -121,9 +125,14 @@ public class DbHelper extends SQLiteOpenHelper {
                 "('SP02', 'MacBook Air M2', 32000000, 5, 'Cái', '2025-07-03', 'DM02')");
 
         // Dữ liệu mẫu HOA_DON
-        db.execSQL("INSERT INTO HOA_DON VALUES " +
-                "('HD01', 'KH01', 'NV01', '2025-07-10', 25000000)," +
-                "('HD02', 'KH02', 'NV02', '2025-07-11', 32000000)");
+//        db.execSQL("INSERT INTO HOA_DON VALUES " +
+//                "('HD01', 'KH01', 'NV01', '2025-07-10', 25000000)," +
+//                "('HD02', 'KH02', 'NV02', '2025-07-11', 32000000)");
+
+        db.execSQL("INSERT INTO HOA_DON (MaKhachHang, MaNhanVien, NgayLap, TongTien) VALUES " +
+                "('KH01', 'NV01', '2025-07-10', 25000000)," +
+                "('KH02', 'NV02', '2025-07-11', 32000000)");
+
 
         // Dữ liệu mẫu CHI_TIET_HOA_DON
         db.execSQL("INSERT INTO CHI_TIET_HOA_DON VALUES " +
@@ -145,7 +154,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS DANH_MUC");
         db.execSQL("DROP TABLE IF EXISTS NHAN_VIEN");
         db.execSQL("DROP TABLE IF EXISTS KHACH_HANG");
-        db.execSQL("DROP TABLE IF EXISTS TABLE_GIO_HANG");
+        db.execSQL("DROP TABLE IF EXISTS GIO_HANG");
         onCreate(db);
     }
 }

@@ -99,7 +99,7 @@ public class SanPhamDAO {
         values.put("DonViTinh", sp.getDonViTinh());
         values.put("NgayNhap", sp.getNgayNhap());
 
-        long row = db.insert("TABLE_GIO_HANG", null, values);
+        long row = db.insert("GIO_HANG", null, values);
         return row > 0;
     }
 }

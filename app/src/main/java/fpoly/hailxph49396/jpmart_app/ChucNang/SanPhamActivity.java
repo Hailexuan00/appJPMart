@@ -27,6 +27,7 @@ import fpoly.hailxph49396.jpmart_app.DAO.DanhMucDAO;
 import fpoly.hailxph49396.jpmart_app.DAO.SanPhamDAO;
 import fpoly.hailxph49396.jpmart_app.DTO.DanhMucDTO;
 import fpoly.hailxph49396.jpmart_app.DTO.SanPhamDTO;
+import fpoly.hailxph49396.jpmart_app.MenuActivity;
 import fpoly.hailxph49396.jpmart_app.R;
 
 public class SanPhamActivity extends AppCompatActivity {
@@ -54,7 +55,11 @@ public class SanPhamActivity extends AppCompatActivity {
         sanPhamDAO = new SanPhamDAO(this);
         loadData();
 
-        imgBack.setOnClickListener(v -> finish());
+
+        imgBack.setOnClickListener(v ->
+                startActivity(new Intent(this, MenuActivity.class))
+        );
+
         // imgGioHang xử lý theo app của bạn
         imgGioHang.setOnClickListener(v ->
                 startActivity(new Intent(this, GioHangActivity.class))

@@ -104,13 +104,13 @@ public class MenuActivity extends AppCompatActivity {
 
             listQuanLy.add(new MenuDTO("Sản phẩm", R.drawable.sanpham));
             listQuanLy.add(new MenuDTO("Khách hàng", R.drawable.khach));
-            listQuanLy.add(new MenuDTO("Hóa đơn", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Hóa đơn", R.drawable.hoadon));
             listQuanLy.add(new MenuDTO("Danh mục", R.drawable.danhmuc));
             listQuanLy.add(new MenuDTO("Nhân viên", R.drawable.nv));
         } else {
             listQuanLy.add(new MenuDTO("Sản phẩm", R.drawable.sanpham));
             listQuanLy.add(new MenuDTO("Khách hàng", R.drawable.khach));
-            listQuanLy.add(new MenuDTO("Hóa đơn", R.drawable.dinosaur));
+            listQuanLy.add(new MenuDTO("Hóa đơn", R.drawable.hoadon));
             listQuanLy.add(new MenuDTO("Danh mục", R.drawable.danhmuc));
         }
 
@@ -138,7 +138,8 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(new Intent(MenuActivity.this, KhachHangActivity.class));
                 finish();
             } else if (title.equals("Hóa đơn")) {
-//                startActivity(new Intent(MenuActivity.this, HoaDonActivity.class));
+                startActivity(new Intent(MenuActivity.this, HoaDonActivity.class));
+                finish();
             } else if (title.equals("Danh mục")) {
                 startActivity(new Intent(MenuActivity.this, DanhMucActivity.class));
                 finish();
