@@ -89,4 +89,17 @@ public class SanPhamDAO {
         c.close();
         return list;
     }
+
+    public boolean themVaoGio(SanPhamDTO sp) {
+        ContentValues values = new ContentValues();
+        values.put("MaSanPham", sp.getMaSanPham());
+        values.put("TenSanPham", sp.getTenSanPham());
+        values.put("Gia", sp.getGia());
+        values.put("SoLuong", sp.getSoLuong());
+        values.put("DonViTinh", sp.getDonViTinh());
+        values.put("NgayNhap", sp.getNgayNhap());
+
+        long row = db.insert("TABLE_GIO_HANG", null, values);
+        return row > 0;
+    }
 }

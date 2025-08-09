@@ -1,58 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    card_view:cardCornerRadius="12dp"
-    card_view:cardElevation="6dp">
+    android:orientation="horizontal"
+    android:padding="8dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvTenSP_Gio"
-            android:layout_width="match_parent"
+            android:id="@+id/tvTenSP"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tên sản phẩm"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvGiaSP_Gio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Giá: 10000 đ"
-            android:textSize="16sp"
-            android:textColor="#444444" />
-
-        <TextView
-            android:id="@+id/tvSoLuong_Gio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Số lượng: 1"
+            android:textStyle="bold"
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/tvThanhTien"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tổng: 10000 đ"
-            android:textSize="16sp"
-            android:textStyle="italic" />
-
-        <ImageButton
-            android:id="@+id/btnXoaGio"
+            android:id="@+id/tvGia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_delete"
-            android:background="?android:selectableItemBackgroundBorderless"
-            android:layout_gravity="end"
-            android:contentDescription="Xóa sản phẩm" />
-
+            android:text="100.000 đ"
+            android:textColor="#FF5722"
+            android:textSize="14sp" />
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+    <ImageButton
+        android:id="@+id/btnGiam"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@android:drawable/ic_media_previous"
+        android:background="?attr/selectableItemBackgroundBorderless" />
+
+    <TextView
+        android:id="@+id/tvSoLuong"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="16sp" />
+
+    <ImageButton
+        android:id="@+id/btnTang"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@android:drawable/ic_media_next"
+        android:background="?attr/selectableItemBackgroundBorderless" />
+
+    <ImageButton
+        android:id="@+id/btnXoa"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@android:drawable/ic_menu_delete"
+        android:background="?attr/selectableItemBackgroundBorderless" />
+</LinearLayout>

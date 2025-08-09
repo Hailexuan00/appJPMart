@@ -6,11 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import fpoly.hailxph49396.jpmart_app.DAO.GioHangDAO;
@@ -18,59 +18,90 @@ import fpoly.hailxph49396.jpmart_app.DTO.GioHangDTO;
 import fpoly.hailxph49396.jpmart_app.R;
 
 public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHolder> {
-    private final Context context;
-    private final ArrayList<GioHangDTO> list;
-    private final GioHangDAO gioHangDAO;
 
-    public GioHangAdapter(Context context, ArrayList<GioHangDTO> list) {
+    private Context context;
+    private ArrayList<GioHangDTO> list;
+    private GioHangDAO gioHangDAO;
+    private OnCartChangeListener listener;
+
+    // Interface callback để thông báo khi giỏ hàng thay đổi
+    public interface OnCartChangeListener {
+        void onCartUpdated();
+    }
+
+    // Constructor chính
+    public GioHangAdapter(Context context, ArrayList<GioHangDTO> list, OnCartChangeListener listener) {
         this.context = context;
-        this.list = list;
+        this.list = (list != null) ? list : new ArrayList<>();
+        this.listener = listener;
         this.gioHangDAO = new GioHangDAO(context);
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_gio_hang, parent, false);
-        return new ViewHolder(view);
+        View v = LayoutInflater.from(context).inflate(R.layout.item_gio_hang, parent, false);
+        return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         GioHangDTO item = list.get(position);
+        DecimalFormat df = new DecimalFormat("#,###");
+
         holder.tvTenSP.setText(item.getTenSanPham());
-        holder.tvSoLuong.setText("SL: " + item.getSoLuong());
-        holder.tvGia.setText(item.getGia() + " đ");
-        holder.tvThanhTien.setText("Tổng: " + item.getThanhTien() + " đ");
+        holder.tvGia.setText(df.format(item.getGia()) + " đ");
+        holder.tvSoLuong.setText(String.valueOf(item.getSoLuong()));
+
+        holder.btnTang.setOnClickListener(v -> {
+            int soLuongMoi = item.getSoLuong() + 1;
+            item.setSoLuong(soLuongMoi);
+            gioHangDAO.updateSoLuong(item.getId(), soLuongMoi);
+            notifyItemChanged(position);
+            if (listener != null) {
+                listener.onCartUpdated();
+            }
+        });
+
+        holder.btnGiam.setOnClickListener(v -> {
+            if (item.getSoLuong() > 1) {
+                int soLuongMoi = item.getSoLuong() - 1;
+                item.setSoLuong(soLuongMoi);
+                gioHangDAO.updateSoLuong(item.getId(), soLuongMoi);
+                notifyItemChanged(position);
+                if (listener != null) {
+                    listener.onCartUpdated();
+                }
+            }
+        });
 
         holder.btnXoa.setOnClickListener(v -> {
-            int kq = gioHangDAO.xoaSanPham(item.getMaSanPham());
-            if (kq > 0) {
-                list.remove(position);
-                notifyItemRemoved(position);
-                Toast.makeText(context, "Đã xóa sản phẩm", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+            gioHangDAO.delete(item.getId());
+            list.remove(position);
+            notifyItemRemoved(position);
+            if (listener != null) {
+                listener.onCartUpdated();
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return (list != null) ? list.size() : 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTenSP, tvSoLuong, tvGia, tvThanhTien;
-        ImageButton btnXoa;
+        TextView tvTenSP, tvGia, tvSoLuong;
+        ImageButton btnTang, btnGiam, btnXoa;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTenSP = itemView.findViewById(R.id.tvTenSP_Gio);
-            tvSoLuong = itemView.findViewById(R.id.tvSoLuong_Gio);
-            tvGia = itemView.findViewById(R.id.tvGiaSP_Gio);
-            tvThanhTien = itemView.findViewById(R.id.tvThanhTien);
-            btnXoa = itemView.findViewById(R.id.btnXoaGio);
+            tvTenSP = itemView.findViewById(R.id.tvTenSP);
+            tvGia = itemView.findViewById(R.id.tvGia);
+            tvSoLuong = itemView.findViewById(R.id.tvSoLuong);
+            btnTang = itemView.findViewById(R.id.btnTang);
+            btnGiam = itemView.findViewById(R.id.btnGiam);
+            btnXoa = itemView.findViewById(R.id.btnXoa);
         }
     }
 }

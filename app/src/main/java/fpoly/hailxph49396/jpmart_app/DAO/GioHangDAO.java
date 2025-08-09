@@ -11,101 +11,67 @@ import fpoly.hailxph49396.jpmart_app.Database.DbHelper;
 import fpoly.hailxph49396.jpmart_app.DTO.GioHangDTO;
 
 public class GioHangDAO {
-    private final SQLiteDatabase db;
+    private SQLiteDatabase db;
 
     public GioHangDAO(Context context) {
         DbHelper dbHelper = new DbHelper(context);
         db = dbHelper.getWritableDatabase();
     }
 
-    // Thêm sản phẩm vào giỏ hàng (nếu đã tồn tại thì tăng số lượng)
-    public boolean themVaoGio(GioHangDTO gioHang) {
-        GioHangDTO spTonTai = getSanPhamTrongGio(gioHang.getMaSanPham());
-        if (spTonTai != null) {
-            int soLuongMoi = spTonTai.getSoLuong() + gioHang.getSoLuong();
-            return capNhatSoLuong(gioHang.getMaSanPham(), soLuongMoi) > 0;
-        }
-
-        // Nếu số lượng <= 0 thì set mặc định là 1
-        if (gioHang.getSoLuong() <= 0) {
-            gioHang.setSoLuong(1);
-        }
-
+    public long insert(GioHangDTO gioHang) {
         ContentValues values = new ContentValues();
-        values.put("maSanPham", gioHang.getMaSanPham());
-        values.put("tenSanPham", gioHang.getTenSanPham());
-        values.put("soLuong", gioHang.getSoLuong());
-        values.put("gia", gioHang.getGia());
-
-        long result = db.insert("TABLE_GIO_HANG", null, values);
-        return result != -1;
+        values.put("MaSanPham", gioHang.getMaSanPham());
+        values.put("TenSanPham", gioHang.getTenSanPham());
+        values.put("SoLuong", gioHang.getSoLuong());
+        values.put("Gia", gioHang.getGia());
+        values.put("DonViTinh", gioHang.getDonViTinh());
+        values.put("NgayNhap", gioHang.getNgayNhap());
+        return db.insert("TABLE_GIO_HANG", null, values);
     }
 
-    // Lấy danh sách tất cả sản phẩm trong giỏ
-    public ArrayList<GioHangDTO> getDSGioHang() {
+    public int updateSoLuong(int id, int soLuongMoi) {
+        ContentValues values = new ContentValues();
+        values.put("SoLuong", soLuongMoi);
+        return db.update("TABLE_GIO_HANG", values, "id=?", new String[]{String.valueOf(id)});
+    }
+
+    public int delete(int id) {
+        return db.delete("TABLE_GIO_HANG", "id=?", new String[]{String.valueOf(id)});
+    }
+
+    public ArrayList<GioHangDTO> getAll() {
         ArrayList<GioHangDTO> list = new ArrayList<>();
         Cursor c = db.rawQuery("SELECT * FROM TABLE_GIO_HANG", null);
         if (c.moveToFirst()) {
             do {
-                GioHangDTO gioHang = new GioHangDTO(
-                        c.getString(0), // maSanPham
-                        c.getString(1), // tenSanPham
-                        c.getInt(2),    // soLuong
-                        c.getInt(3)     // gia
-                );
-                list.add(gioHang);
+                GioHangDTO gh = new GioHangDTO();
+                gh.setId(c.getInt(0));
+                gh.setMaSanPham(c.getString(1));
+                gh.setTenSanPham(c.getString(2));
+                gh.setSoLuong(c.getInt(3));
+                gh.setGia(c.getInt(4));
+                gh.setDonViTinh(c.getString(5));
+                gh.setNgayNhap(c.getString(6));
+                list.add(gh);
             } while (c.moveToNext());
         }
         c.close();
         return list;
     }
 
-    // Lấy một sản phẩm theo mã
-    public GioHangDTO getSanPhamTrongGio(String maSanPham) {
-        Cursor c = db.rawQuery("SELECT * FROM TABLE_GIO_HANG WHERE maSanPham = ?", new String[]{maSanPham});
-        if (c.moveToFirst()) {
-            GioHangDTO gioHang = new GioHangDTO(
-                    c.getString(0),
-                    c.getString(1),
-                    c.getInt(2),
-                    c.getInt(3)
-            );
-            c.close();
-            return gioHang;
-        }
-        c.close();
-        return null;
-    }
-
-    // Cập nhật số lượng sản phẩm
-    public int capNhatSoLuong(String maSanPham, int soLuongMoi) {
-        ContentValues values = new ContentValues();
-        values.put("soLuong", soLuongMoi);
-        return db.update("TABLE_GIO_HANG", values, "maSanPham = ?", new String[]{maSanPham});
-    }
-
-    // Xóa một sản phẩm khỏi giỏ
-    public int xoaSanPham(String maSanPham) {
-        return db.delete("TABLE_GIO_HANG", "maSanPham = ?", new String[]{maSanPham});
-    }
-
-    // Xóa toàn bộ giỏ hàng
-    public void xoaToanBoGioHang() {
-        db.execSQL("DELETE FROM TABLE_GIO_HANG");
-    }
-
-    // Tính tổng tiền giỏ hàng
-    public int tinhTongTien() {
+    public int getTongTien() {
         int tong = 0;
-        Cursor c = db.rawQuery("SELECT soLuong, gia FROM TABLE_GIO_HANG", null);
+        Cursor c = db.rawQuery("SELECT SoLuong, Gia FROM TABLE_GIO_HANG", null);
         if (c.moveToFirst()) {
             do {
-                int soLuong = c.getInt(0);
-                int gia = c.getInt(1);
-                tong += soLuong * gia;
+                tong += c.getInt(0) * c.getInt(1);
             } while (c.moveToNext());
         }
         c.close();
         return tong;
+    }
+
+    public void clearGioHang() {
+        db.delete("TABLE_GIO_HANG", null, null);
     }
 }

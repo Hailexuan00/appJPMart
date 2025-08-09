@@ -2,6 +2,7 @@ package fpoly.hailxph49396.jpmart_app.ChucNang;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -55,6 +56,9 @@ public class SanPhamActivity extends AppCompatActivity {
 
         imgBack.setOnClickListener(v -> finish());
         // imgGioHang xử lý theo app của bạn
+        imgGioHang.setOnClickListener(v ->
+                startActivity(new Intent(this, GioHangActivity.class))
+        );
 
         fabAdd.setOnClickListener(v -> showSanPhamDialog(null));
 
@@ -75,7 +79,12 @@ public class SanPhamActivity extends AppCompatActivity {
             @Override
             public void onAddToCart(SanPhamDTO sanPham) {
                 // Thêm vào giỏ hàng: dùng GioHangDAO nếu cần
-                Toast.makeText(SanPhamActivity.this, "Đã thêm vào giỏ (demo)", Toast.LENGTH_SHORT).show();
+                boolean ok = sanPhamDAO.themVaoGio(sanPham);
+                if (!ok) {
+                    Toast.makeText(SanPhamActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Toast.makeText(SanPhamActivity.this, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
             }
 
             @Override

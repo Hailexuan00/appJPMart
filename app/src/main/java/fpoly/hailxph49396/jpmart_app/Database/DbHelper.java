@@ -95,8 +95,9 @@ public class DbHelper extends SQLiteOpenHelper {
                 "TenSanPham TEXT NOT NULL, " +
                 "SoLuong INTEGER NOT NULL, " +
                 "Gia INTEGER NOT NULL, " +
+                "DonViTinh TEXT, " +
+                "NgayNhap TEXT, " +
                 "FOREIGN KEY (MaSanPham) REFERENCES SAN_PHAM(MaSanPham))");
-
 
 
         // Dữ liệu mẫu KHACH_HANG

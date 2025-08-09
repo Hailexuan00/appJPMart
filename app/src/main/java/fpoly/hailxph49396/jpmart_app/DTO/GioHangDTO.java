@@ -1,54 +1,46 @@
 package fpoly.hailxph49396.jpmart_app.DTO;
 
 public class GioHangDTO {
+    private int id;
     private String maSanPham;
     private String tenSanPham;
     private int soLuong;
     private int gia;
+    private String donViTinh;
+    private String ngayNhap;
 
     public GioHangDTO() {
     }
 
-    public GioHangDTO(String maSanPham, String tenSanPham, int soLuong, int gia) {
+    public GioHangDTO(int id, String maSanPham, String tenSanPham, int soLuong, int gia, String donViTinh, String ngayNhap) {
+        this.id = id;
         this.maSanPham = maSanPham;
         this.tenSanPham = tenSanPham;
         this.soLuong = soLuong;
         this.gia = gia;
+        this.donViTinh = donViTinh;
+        this.ngayNhap = ngayNhap;
     }
 
-    public String getMaSanPham() {
-        return maSanPham;
-    }
+    // Getter & Setter
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public void setMaSanPham(String maSanPham) {
-        this.maSanPham = maSanPham;
-    }
+    public String getMaSanPham() { return maSanPham; }
+    public void setMaSanPham(String maSanPham) { this.maSanPham = maSanPham; }
 
-    public String getTenSanPham() {
-        return tenSanPham;
-    }
+    public String getTenSanPham() { return tenSanPham; }
+    public void setTenSanPham(String tenSanPham) { this.tenSanPham = tenSanPham; }
 
-    public void setTenSanPham(String tenSanPham) {
-        this.tenSanPham = tenSanPham;
-    }
+    public int getSoLuong() { return soLuong; }
+    public void setSoLuong(int soLuong) { this.soLuong = soLuong; }
 
-    public int getSoLuong() {
-        return soLuong;
-    }
+    public int getGia() { return gia; }
+    public void setGia(int gia) { this.gia = gia; }
 
-    public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
-    }
+    public String getDonViTinh() { return donViTinh; }
+    public void setDonViTinh(String donViTinh) { this.donViTinh = donViTinh; }
 
-    public int getGia() {
-        return gia;
-    }
-
-    public void setGia(int gia) {
-        this.gia = gia;
-    }
-
-    public int getThanhTien() {
-        return gia * soLuong;
-    }
+    public String getNgayNhap() { return ngayNhap; }
+    public void setNgayNhap(String ngayNhap) { this.ngayNhap = ngayNhap; }
 }
