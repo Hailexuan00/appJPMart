@@ -45,7 +45,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
         // NHAN_VIEN
         db.execSQL("CREATE TABLE NHAN_VIEN (" +
-                "MaNhanVien TEXT PRIMARY KEY NOT NULL, " +
+                "MaNhanVien TEXT PRIMARY KEY, " +
                 "TenNhanVien TEXT NOT NULL, " +
                 "DiaChi TEXT NOT NULL, " +
                 "ChucVu INTEGER NOT NULL, " +       // 1: Quản lý, 0: Nhân viên

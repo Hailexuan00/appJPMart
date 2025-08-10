@@ -5,12 +5,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 
-import fpoly.hailxph49396.jpmart_app.Database.DbHelper;
 import fpoly.hailxph49396.jpmart_app.DTO.TaikhoanDTO;
+import fpoly.hailxph49396.jpmart_app.Database.DbHelper;
+import fpoly.hailxph49396.jpmart_app.DTO.NhanVienDTO;
 
 public class TaikhoanDAO {
 
@@ -20,109 +20,123 @@ public class TaikhoanDAO {
         dbHelper = new DbHelper(context);
     }
 
-    public boolean insertTaikhoan(TaikhoanDTO tk) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("username", tk.getUsername());
-        values.put("password", tk.getPassword());
-        values.put("ten", tk.getTen());
-        values.put("ho_va_ten_dem", tk.getHo_va_ten_dem());
-        values.put("gioi_tinh", tk.getGioi_tinh());
-        values.put("so_dien_thoai", tk.getSo_dien_thoai());
-        values.put("email", tk.getEmail());
-        values.put("dia_chi", tk.getDia_chi());
-        long result = db.insert("TAI_KHOAN", null, values);
-        return result != -1;
-    }
-
-    public boolean checkLogin(String username, String password) {
+    // Đăng nhập
+    public boolean checkLogin(String maNV, String matKhau) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM TAI_KHOAN WHERE username = ? AND password = ?", new String[]{username, password});
+        Cursor cursor = db.rawQuery("SELECT * FROM NHAN_VIEN WHERE MaNhanVien = ? AND MatKhau = ?",
+                new String[]{maNV, matKhau});
         boolean result = cursor.getCount() > 0;
         cursor.close();
         return result;
     }
 
+    // Lấy tất cả nhân viên
     @SuppressLint("Range")
-    public ArrayList<TaikhoanDTO> getAllTaikhoan() {
-        ArrayList<TaikhoanDTO> list = new ArrayList<>();
+    public ArrayList<NhanVienDTO> getAllNhanVien() {
+        ArrayList<NhanVienDTO> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM TAI_KHOAN", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM NHAN_VIEN", null);
         if (cursor.moveToFirst()) {
             do {
-                TaikhoanDTO tk = new TaikhoanDTO();
-                tk.setUsername(cursor.getString(cursor.getColumnIndex("username")));
-                tk.setPassword(cursor.getString(cursor.getColumnIndex("password")));
-                tk.setTen(cursor.getString(cursor.getColumnIndex("ten")));
-                tk.setHo_va_ten_dem(cursor.getString(cursor.getColumnIndex("ho_va_ten_dem")));
-                tk.setGioi_tinh(cursor.getString(cursor.getColumnIndex("gioi_tinh")));
-                tk.setSo_dien_thoai(cursor.getString(cursor.getColumnIndex("so_dien_thoai")));
-                tk.setEmail(cursor.getString(cursor.getColumnIndex("email")));
-                tk.setDia_chi(cursor.getString(cursor.getColumnIndex("dia_chi")));
-                list.add(tk);
+                NhanVienDTO nv = new NhanVienDTO();
+                nv.setMaNhanVien(cursor.getString(cursor.getColumnIndex("MaNhanVien")));
+                nv.setTenNhanVien(cursor.getString(cursor.getColumnIndex("TenNhanVien")));
+                nv.setDiaChi(cursor.getString(cursor.getColumnIndex("DiaChi")));
+                nv.setChucVu(cursor.getInt(cursor.getColumnIndex("ChucVu")));
+                nv.setLuong(cursor.getDouble(cursor.getColumnIndex("Luong")));
+                nv.setMatKhau(cursor.getString(cursor.getColumnIndex("MatKhau")));
+                list.add(nv);
             } while (cursor.moveToNext());
         }
         cursor.close();
         return list;
     }
 
+    // Lấy 1 nhân viên theo mã
     @SuppressLint("Range")
-    public TaikhoanDTO getUserByUsername(String username) {
-        if (username == null) return null; // tránh truyền null gây lỗi
+    public NhanVienDTO getNhanVienById(String maNV) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM TAI_KHOAN WHERE username = ?", new String[]{username});
-        TaikhoanDTO tk = null;
+        Cursor cursor = db.rawQuery("SELECT * FROM NHAN_VIEN WHERE MaNhanVien = ?", new String[]{maNV});
+        NhanVienDTO nv = null;
         if (cursor.moveToFirst()) {
-            tk = new TaikhoanDTO();
-            tk.setUsername(cursor.getString(cursor.getColumnIndex("username")));
-            tk.setPassword(cursor.getString(cursor.getColumnIndex("password")));
-            tk.setTen(cursor.getString(cursor.getColumnIndex("ten")));
-            tk.setHo_va_ten_dem(cursor.getString(cursor.getColumnIndex("ho_va_ten_dem")));
-            tk.setGioi_tinh(cursor.getString(cursor.getColumnIndex("gioi_tinh")));
-            tk.setSo_dien_thoai(cursor.getString(cursor.getColumnIndex("so_dien_thoai")));
-            tk.setEmail(cursor.getString(cursor.getColumnIndex("email")));
-            tk.setDia_chi(cursor.getString(cursor.getColumnIndex("dia_chi")));
+            nv = new NhanVienDTO();
+            nv.setMaNhanVien(cursor.getString(cursor.getColumnIndex("MaNhanVien")));
+            nv.setTenNhanVien(cursor.getString(cursor.getColumnIndex("TenNhanVien")));
+            nv.setDiaChi(cursor.getString(cursor.getColumnIndex("DiaChi")));
+            nv.setChucVu(cursor.getInt(cursor.getColumnIndex("ChucVu")));
+            nv.setLuong(cursor.getDouble(cursor.getColumnIndex("Luong")));
+            nv.setMatKhau(cursor.getString(cursor.getColumnIndex("MatKhau")));
         }
         cursor.close();
-        return tk;
+        return nv;
     }
 
-    public boolean updateTaikhoan(TaikhoanDTO tk) {
+    // Thêm nhân viên
+    public boolean insertNhanVien(NhanVienDTO nv) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("password", tk.getPassword());
-        values.put("ten", tk.getTen());
-        values.put("ho_va_ten_dem", tk.getHo_va_ten_dem());
-        values.put("gioi_tinh", tk.getGioi_tinh());
-        values.put("so_dien_thoai", tk.getSo_dien_thoai());
-        values.put("email", tk.getEmail());
-        values.put("dia_chi", tk.getDia_chi());
-        int result = db.update("TAI_KHOAN", values, "username = ?", new String[]{tk.getUsername()});
+        values.put("MaNhanVien", nv.getMaNhanVien());
+        values.put("TenNhanVien", nv.getTenNhanVien());
+        values.put("DiaChi", nv.getDiaChi());
+        values.put("ChucVu", nv.getChucVu());
+        values.put("Luong", nv.getLuong());
+        values.put("MatKhau", nv.getMatKhau());
+        long result = db.insert("NHAN_VIEN", null, values);
+        return result != -1;
+    }
+
+    // Cập nhật nhân viên
+    public boolean updateNhanVien(NhanVienDTO nv) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("TenNhanVien", nv.getTenNhanVien());
+        values.put("DiaChi", nv.getDiaChi());
+        values.put("ChucVu", nv.getChucVu());
+        values.put("Luong", nv.getLuong());
+        values.put("MatKhau", nv.getMatKhau());
+        int result = db.update("NHAN_VIEN", values, "MaNhanVien = ?", new String[]{nv.getMaNhanVien()});
         return result > 0;
     }
 
-    public boolean deleteTaikhoan(String username) {
+    // Xóa nhân viên
+    public boolean deleteNhanVien(String maNV) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        int result = db.delete("TAI_KHOAN", "username = ?", new String[]{username});
+        int result = db.delete("NHAN_VIEN", "MaNhanVien = ?", new String[]{maNV});
         return result > 0;
     }
 
-    public boolean doiMatKhau(String username, String oldPass, String newPass) {
+    // Đổi mật khẩu
+    public boolean doiMatKhau(String maNV, String oldPass, String newPass) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM TAI_KHOAN WHERE username = ? AND password = ?", new String[]{username, oldPass});
-
+        Cursor cursor = db.rawQuery("SELECT * FROM NHAN_VIEN WHERE MaNhanVien = ? AND MatKhau = ?",
+                new String[]{maNV, oldPass});
         if (cursor != null && cursor.moveToFirst()) {
             ContentValues values = new ContentValues();
-            values.put("password", newPass);
-            int result = db.update("TAI_KHOAN", values, "username = ?", new String[]{username});
+            values.put("MatKhau", newPass);
+            int result = db.update("NHAN_VIEN", values, "MaNhanVien = ?", new String[]{maNV});
             cursor.close();
-            Log.d("DOI_MK", "Cập nhật thành công");
             return result > 0;
         }
-
-        Log.d("DOI_MK", "Sai mật khẩu hoặc username: " + username + ", " + oldPass);
         if (cursor != null) cursor.close();
         return false;
+    }
+
+    @SuppressLint("Range")
+    public NhanVienDTO getUserByUsername(String maNV) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM NHAN_VIEN WHERE MaNhanVien = ?", new String[]{maNV});
+        NhanVienDTO nv = null;
+        if (cursor.moveToFirst()) {
+            nv = new NhanVienDTO();
+            nv.setMaNhanVien(cursor.getString(cursor.getColumnIndex("MaNhanVien")));
+            nv.setTenNhanVien(cursor.getString(cursor.getColumnIndex("TenNhanVien")));
+            nv.setDiaChi(cursor.getString(cursor.getColumnIndex("DiaChi")));
+            nv.setChucVu(cursor.getInt(cursor.getColumnIndex("ChucVu")));
+            nv.setLuong(cursor.getDouble(cursor.getColumnIndex("Luong")));
+            nv.setMatKhau(cursor.getString(cursor.getColumnIndex("MatKhau")));
+        }
+        cursor.close();
+        return nv;
     }
 
 

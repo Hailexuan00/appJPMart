@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:hint="Mã nhân viên"
         android:inputType="text"
-        android:enabled="false" />
+         />
 
     <EditText
         android:id="@+id/edTenNV"

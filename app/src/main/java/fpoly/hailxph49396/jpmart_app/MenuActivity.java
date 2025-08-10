@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -25,11 +24,10 @@ import fpoly.hailxph49396.jpmart_app.ChucNang.DoiMatKhauActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.HoaDonActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.KhachHangActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.NhanVienActivity;
-
 import fpoly.hailxph49396.jpmart_app.ChucNang.SanPhamActivity;
 import fpoly.hailxph49396.jpmart_app.DAO.TaikhoanDAO;
 import fpoly.hailxph49396.jpmart_app.DTO.MenuDTO;
-import fpoly.hailxph49396.jpmart_app.DTO.TaikhoanDTO;
+import fpoly.hailxph49396.jpmart_app.DTO.NhanVienDTO;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -65,28 +63,23 @@ public class MenuActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-        }
-
         // Khởi tạo DAO
         dao = new TaikhoanDAO(this);
 
-        // Lấy username từ Intent
-        String username = getIntent().getStringExtra("username");
-        if (username == null) {
+        // Lấy mã nhân viên từ Intent
+        String maNV = getIntent().getStringExtra("MaNhanVien");
+        if (maNV == null) {
+            Log.e("MenuActivity", "Không tìm thấy mã nhân viên trong Intent");
             Toast.makeText(this, "Vui lòng đăng nhập lại", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
             return;
         }
 
-        // Lấy thông tin người dùng từ DAO
-        TaikhoanDTO user = dao.getUserByUsername(username);
+        // Lấy thông tin nhân viên
+        NhanVienDTO user = dao.getNhanVienById(maNV);
         if (user == null) {
-            Log.e("MenuActivity", "User không tồn tại với username = " + username);
+            Log.e("MenuActivity", "User không tồn tại với MaNhanVien = " + maNV);
             Toast.makeText(this, "Không tìm thấy tài khoản", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
@@ -94,10 +87,10 @@ public class MenuActivity extends AppCompatActivity {
         }
 
         // Hiển thị tên người dùng
-        tvWelcome.setText("Chào, " + user.getTen() + " (" + username + ")");
+        tvWelcome.setText("Chào, " + user.getTenNhanVien() + " (" + maNV + ")");
 
-        // Phân quyền hiển thị menu
-        if ("admin".equals(username)) {
+        // Phân quyền hiển thị menu theo ChucVu
+        if (user.getChucVu() == 1) { // Quản lý
             listThongKe.add(new MenuDTO("Thống kê", R.drawable.dinosaur));
             listThongKe.add(new MenuDTO("Top sản phẩm", R.drawable.dinosaur));
             listThongKe.add(new MenuDTO("Top khách hàng", R.drawable.dinosaur));
@@ -107,7 +100,7 @@ public class MenuActivity extends AppCompatActivity {
             listQuanLy.add(new MenuDTO("Hóa đơn", R.drawable.hoadon));
             listQuanLy.add(new MenuDTO("Danh mục", R.drawable.danhmuc));
             listQuanLy.add(new MenuDTO("Nhân viên", R.drawable.nv));
-        } else {
+        } else { // Nhân viên
             listQuanLy.add(new MenuDTO("Sản phẩm", R.drawable.sanpham));
             listQuanLy.add(new MenuDTO("Khách hàng", R.drawable.khach));
             listQuanLy.add(new MenuDTO("Hóa đơn", R.drawable.hoadon));
@@ -131,25 +124,30 @@ public class MenuActivity extends AppCompatActivity {
 
         gridQuanLy.setOnItemClickListener((parent, view, position, id) -> {
             String title = listQuanLy.get(position).getTitle();
-            if (title.equals("Sản phẩm")) {
-                startActivity(new Intent(MenuActivity.this, SanPhamActivity.class));
-                finish();
-            } else if (title.equals("Khách hàng")) {
-                startActivity(new Intent(MenuActivity.this, KhachHangActivity.class));
-                finish();
-            } else if (title.equals("Hóa đơn")) {
-                startActivity(new Intent(MenuActivity.this, HoaDonActivity.class));
-                finish();
-            } else if (title.equals("Danh mục")) {
-                startActivity(new Intent(MenuActivity.this, DanhMucActivity.class));
-                finish();
-            } else if (title.equals("Nhân viên")) {
-                startActivity(new Intent(MenuActivity.this, NhanVienActivity.class));
-                finish();
-            } else {
-                Toast.makeText(this, "Mở " + title, Toast.LENGTH_SHORT).show();
+            switch (title) {
+                case "Sản phẩm":
+                    startActivity(new Intent(MenuActivity.this, SanPhamActivity.class));
+                    finish();
+                    break;
+                case "Khách hàng":
+                    startActivity(new Intent(MenuActivity.this, KhachHangActivity.class));
+                    finish();
+                    break;
+                case "Hóa đơn":
+                    startActivity(new Intent(MenuActivity.this, HoaDonActivity.class));
+                    finish();
+                    break;
+                case "Danh mục":
+                    startActivity(new Intent(MenuActivity.this, DanhMucActivity.class));
+                    finish();
+                    break;
+                case "Nhân viên":
+                    startActivity(new Intent(MenuActivity.this, NhanVienActivity.class));
+                    finish();
+                    break;
+                default:
+                    Toast.makeText(this, "Mở " + title, Toast.LENGTH_SHORT).show();
             }
-
         });
 
         gridNguoiDung.setOnItemClickListener((parent, view, position, id) -> {

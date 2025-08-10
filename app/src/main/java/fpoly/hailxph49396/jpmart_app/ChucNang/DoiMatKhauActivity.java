@@ -40,11 +40,22 @@ public class DoiMatKhauActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        // ✅ Đúng file và đúng key SharedPreferences
-        SharedPreferences preferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
-        username = preferences.getString("username", "");
-
         taikhoanDAO = new TaikhoanDAO(this);
+
+        // Lấy username từ Intent trước, nếu không có thì lấy SharedPreferences
+        Intent intent = getIntent();
+        username = intent.getStringExtra("maNV");
+        if (username == null || username.isEmpty()) {
+            SharedPreferences preferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+            username = preferences.getString("username", "");
+        }
+
+        if (username == null || username.isEmpty()) {
+            Toast.makeText(this, "Không lấy được thông tin tài khoản. Vui lòng đăng nhập lại.", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, MenuActivity.class));
+            finish();
+            return;
+        }
 
         btnSave.setOnClickListener(v -> {
             String oldPass = edtOldPass.getText().toString().trim();
@@ -80,9 +91,7 @@ public class DoiMatKhauActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
-        finish();
+        finish();  // Đơn giản finish để về lại activity trước
         return true;
     }
 }

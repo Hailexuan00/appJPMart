@@ -138,7 +138,7 @@ public class NhanVienActivity extends AppCompatActivity {
                 int chucVu = Integer.parseInt(chucVuStr);
 
                 NhanVienDTO newNV = new NhanVienDTO(
-                        nv == null ? "NV" + System.currentTimeMillis() : ma,
+                        ma,
                         ten,
                         diaChi,
                         chucVu,
