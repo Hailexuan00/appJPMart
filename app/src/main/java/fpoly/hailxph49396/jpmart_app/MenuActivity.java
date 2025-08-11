@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import fpoly.hailxph49396.jpmart_app.Adapter.MenuAdapter;
 import fpoly.hailxph49396.jpmart_app.ChucNang.DanhMucActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.DoiMatKhauActivity;
+import fpoly.hailxph49396.jpmart_app.ChucNang.GioHangActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.HoaDonActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.KhachHangActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.NhanVienActivity;
@@ -55,6 +56,7 @@ public class MenuActivity extends AppCompatActivity {
         gridQuanLy = findViewById(R.id.gridQuanLy);
         gridNguoiDung = findViewById(R.id.gridNguoiDung);
 
+
         // Toolbar setup
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -72,7 +74,7 @@ public class MenuActivity extends AppCompatActivity {
             Log.e("MenuActivity", "Không tìm thấy mã nhân viên trong Intent");
             Toast.makeText(this, "Vui lòng đăng nhập lại", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, LoginActivity.class));
-            finish();
+
             return;
         }
 
@@ -82,7 +84,7 @@ public class MenuActivity extends AppCompatActivity {
             Log.e("MenuActivity", "User không tồn tại với MaNhanVien = " + maNV);
             Toast.makeText(this, "Không tìm thấy tài khoản", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, LoginActivity.class));
-            finish();
+
             return;
         }
 
@@ -126,24 +128,29 @@ public class MenuActivity extends AppCompatActivity {
             String title = listQuanLy.get(position).getTitle();
             switch (title) {
                 case "Sản phẩm":
-                    startActivity(new Intent(MenuActivity.this, SanPhamActivity.class));
-                    finish();
+//                    startActivity(new Intent(MenuActivity.this, SanPhamActivity.class));
+                    // Trong MenuActivity khi mở GioHangActivity
+                    Intent intent = new Intent(MenuActivity.this, SanPhamActivity.class);
+                    intent.putExtra("MaNhanVien", getIntent().getStringExtra("MaNhanVien"));
+                    intent.putExtra("TenNhanVien", getIntent().getStringExtra("TenNhanVien"));
+                    startActivity(intent);
+
                     break;
                 case "Khách hàng":
                     startActivity(new Intent(MenuActivity.this, KhachHangActivity.class));
-                    finish();
+
                     break;
                 case "Hóa đơn":
                     startActivity(new Intent(MenuActivity.this, HoaDonActivity.class));
-                    finish();
+
                     break;
                 case "Danh mục":
                     startActivity(new Intent(MenuActivity.this, DanhMucActivity.class));
-                    finish();
+
                     break;
                 case "Nhân viên":
                     startActivity(new Intent(MenuActivity.this, NhanVienActivity.class));
-                    finish();
+
                     break;
                 default:
                     Toast.makeText(this, "Mở " + title, Toast.LENGTH_SHORT).show();
@@ -154,7 +161,7 @@ public class MenuActivity extends AppCompatActivity {
             String title = listNguoiDung.get(position).getTitle();
             if (title.equals("Đăng xuất")) {
                 startActivity(new Intent(MenuActivity.this, LoginActivity.class));
-                finish();
+
             } else if (title.equals("Đổi mật khẩu")) {
                 startActivity(new Intent(MenuActivity.this, DoiMatKhauActivity.class));
             } else {

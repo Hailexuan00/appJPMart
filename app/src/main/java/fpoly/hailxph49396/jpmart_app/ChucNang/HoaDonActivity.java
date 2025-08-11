@@ -45,8 +45,6 @@ public class HoaDonActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         toolbar.setNavigationOnClickListener(v -> {
-            Intent intent = new Intent(this, MenuActivity.class);
-            startActivity(intent);
             finish();
         });
     }

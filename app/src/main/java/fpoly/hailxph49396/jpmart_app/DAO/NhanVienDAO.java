@@ -60,4 +60,23 @@ public class NhanVienDAO {
     public int delete(String maNV) {
         return db.delete("NHAN_VIEN", "MaNhanVien=?", new String[]{maNV});
     }
+    public NhanVienDTO getID(String maNV) {
+        Cursor cursor = db.rawQuery("SELECT * FROM NHAN_VIEN WHERE MaNhanVien = ?", new String[]{maNV});
+        if (cursor.moveToFirst()) {
+            NhanVienDTO nv = new NhanVienDTO(
+                    cursor.getString(0), // MaNhanVien
+                    cursor.getString(1), // TenNhanVien
+                    cursor.getString(2), // DiaChi
+                    cursor.getInt(3),    // ChucVu
+                    cursor.getDouble(4), // Luong
+                    cursor.getString(5)  // MatKhau
+            );
+            cursor.close();
+            return nv;
+        }
+        cursor.close();
+        return null;
+    }
+
+
 }

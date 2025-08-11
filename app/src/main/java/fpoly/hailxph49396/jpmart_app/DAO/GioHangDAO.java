@@ -95,27 +95,41 @@ public class GioHangDAO {
 //            return false;
 //            }
 //    }
-public boolean thanhToan() {
+//public boolean thanhToan() {
+//    int tongTien = getTongTien();
+//
+//    ContentValues values = new ContentValues();
+//    values.put("MaKhachHang", "KH01"); // hoặc lấy từ giỏ hàng
+//    values.put("MaNhanVien", "NV01");  // hoặc lấy từ session đăng nhập
+//    values.put("NgayLap", new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
+//    values.put("TongTien", tongTien);
+//
+//    // Bỏ MaHoaDon đi, để SQLite tự tạo
+//    long rowId = db.insert("HOA_DON", null, values);
+//
+//    if (rowId > 0) {
+//        clearGioHang();
+//        return true;
+//    } else {
+//        return false;
+//    }
+//  }
+public boolean thanhToan(String maKH, String maNV) {
     int tongTien = getTongTien();
 
     ContentValues values = new ContentValues();
-    values.put("MaKhachHang", "NV01"); // hoặc lấy từ giỏ hàng
-    values.put("MaNhanVien", "KH02");  // hoặc lấy từ session đăng nhập
+    values.put("MaKhachHang", maKH);
+    values.put("MaNhanVien", "NV01");
     values.put("NgayLap", new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
     values.put("TongTien", tongTien);
 
-    // Bỏ MaHoaDon đi, để SQLite tự tạo
     long rowId = db.insert("HOA_DON", null, values);
 
     if (rowId > 0) {
         clearGioHang();
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
-
-
-
 
 }

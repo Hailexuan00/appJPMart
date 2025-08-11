@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,14 +57,24 @@ public class SanPhamActivity extends AppCompatActivity {
         loadData();
 
 
-        imgBack.setOnClickListener(v ->
-                startActivity(new Intent(this, MenuActivity.class))
-        );
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Quản lý Sản Phẩm");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        toolbar.setNavigationOnClickListener(v -> {
+            finish();
+        });
 
         // imgGioHang xử lý theo app của bạn
-        imgGioHang.setOnClickListener(v ->
-                startActivity(new Intent(this, GioHangActivity.class))
-        );
+        imgGioHang.setOnClickListener(v -> {
+            Intent intent = new Intent(SanPhamActivity.this, GioHangActivity.class);
+            intent.putExtra("MaNhanVien", getIntent().getStringExtra("MaNhanVien"));
+            intent.putExtra("TenNhanVien", getIntent().getStringExtra("TenNhanVien"));
+            startActivity(intent);
+        });
+
 
         fabAdd.setOnClickListener(v -> showSanPhamDialog(null));
 
@@ -90,6 +101,7 @@ public class SanPhamActivity extends AppCompatActivity {
                     return;
                 }
                 Toast.makeText(SanPhamActivity.this, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override

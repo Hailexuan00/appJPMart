@@ -50,8 +50,7 @@ public class DanhMucActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         toolbar.setNavigationOnClickListener(v -> {
-            Intent intent = new Intent(this, MenuActivity.class);
-            startActivity(intent);
+//            startActivity(new Intent(this, MenuActivity.class));
             finish();
         });
     }
@@ -90,4 +89,5 @@ public class DanhMucActivity extends AppCompatActivity {
                 .setNegativeButton("Hủy", null)
                 .show();
     }
+
 }

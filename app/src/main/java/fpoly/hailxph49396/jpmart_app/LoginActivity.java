@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                     sharedPreferences.edit()
                             .putString("username", user)
                             .putString("password", pass)
+                            .putString("TenNhanVien", nv.getTenNhanVien())
                             .putBoolean("remember", true)
                             .apply();
                 } else {

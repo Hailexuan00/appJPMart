@@ -52,6 +52,8 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHold
         SanPhamDTO sp = list.get(position);
         holder.tvTenSP.setText(sp.getTenSanPham());
         holder.tvGia.setText(String.valueOf(sp.getGia()) + " đ");
+        holder.tvSoLuong.setText("Số lượng: " + sp.getSoLuong());
+
 
         holder.btnAddCart.setOnClickListener(v -> {
             if (listener != null) listener.onAddToCart(sp);
@@ -71,13 +73,14 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTenSP, tvGia;
+        TextView tvTenSP, tvGia, tvSoLuong;
         ImageButton btnAddCart, btnEdit, btnDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTenSP = itemView.findViewById(R.id.tvTenSP);
             tvGia = itemView.findViewById(R.id.tvGiaSP);
+            tvSoLuong = itemView.findViewById(R.id.tvSoLuong);
             btnAddCart = itemView.findViewById(R.id.btnAddCart);
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnDelete = itemView.findViewById(R.id.btnDelete);

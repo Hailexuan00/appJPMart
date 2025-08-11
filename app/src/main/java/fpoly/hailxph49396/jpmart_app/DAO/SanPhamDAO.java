@@ -90,16 +90,50 @@ public class SanPhamDAO {
         return list;
     }
 
-    public boolean themVaoGio(SanPhamDTO sp) {
+//    public boolean themVaoGio(SanPhamDTO sp) {
+//        ContentValues values = new ContentValues();
+//        values.put("MaSanPham", sp.getMaSanPham());
+//        values.put("TenSanPham", sp.getTenSanPham());
+//        values.put("Gia", sp.getGia());
+//        values.put("SoLuong", sp.getSoLuong());
+//        values.put("DonViTinh", sp.getDonViTinh());
+//        values.put("NgayNhap", sp.getNgayNhap());
+//
+//        long row = db.insert("GIO_HANG", null, values);
+//        return row > 0;
+//    }
+public boolean themVaoGio(SanPhamDTO sp) {
+    Cursor cursor = db.rawQuery("SELECT SoLuong FROM GIO_HANG WHERE MaSanPham = ?", new String[]{sp.getMaSanPham()});
+
+    if (cursor.moveToFirst()) {
+        int soLuongGioHang = cursor.getInt(0);
+        cursor.close();
+
+        // Kiểm tra nếu tăng 1 sẽ vượt quá tồn kho
+        if (soLuongGioHang + 1 > sp.getSoLuong()) {
+            // Không tăng nữa, có thể báo lỗi hoặc thông báo người dùng
+            return false;
+        }
+
+        ContentValues values = new ContentValues();
+        values.put("SoLuong", soLuongGioHang + 1);
+        int row = db.update("GIO_HANG", values, "MaSanPham = ?", new String[]{sp.getMaSanPham()});
+        return row > 0;
+
+    } else {
+        cursor.close();
+        // Thêm sản phẩm mới vào giỏ với số lượng là 1
         ContentValues values = new ContentValues();
         values.put("MaSanPham", sp.getMaSanPham());
         values.put("TenSanPham", sp.getTenSanPham());
         values.put("Gia", sp.getGia());
-        values.put("SoLuong", sp.getSoLuong());
+        values.put("SoLuong", 1);  // Bắt đầu với 1
         values.put("DonViTinh", sp.getDonViTinh());
         values.put("NgayNhap", sp.getNgayNhap());
-
         long row = db.insert("GIO_HANG", null, values);
         return row > 0;
     }
+}
+
+
 }
