@@ -26,6 +26,7 @@ import fpoly.hailxph49396.jpmart_app.ChucNang.HoaDonActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.KhachHangActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.NhanVienActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.SanPhamActivity;
+import fpoly.hailxph49396.jpmart_app.ChucNang.ThongKeActivity;
 import fpoly.hailxph49396.jpmart_app.DAO.TaikhoanDAO;
 import fpoly.hailxph49396.jpmart_app.DTO.MenuDTO;
 import fpoly.hailxph49396.jpmart_app.DTO.NhanVienDTO;
@@ -93,7 +94,7 @@ public class MenuActivity extends AppCompatActivity {
 
         // Phân quyền hiển thị menu theo ChucVu
         if (user.getChucVu() == 1) { // Quản lý
-            listThongKe.add(new MenuDTO("Thống kê", R.drawable.dinosaur));
+            listThongKe.add(new MenuDTO("Thống kê", R.drawable.thongke));
             listThongKe.add(new MenuDTO("Top sản phẩm", R.drawable.dinosaur));
             listThongKe.add(new MenuDTO("Top khách hàng", R.drawable.dinosaur));
 
@@ -122,6 +123,19 @@ public class MenuActivity extends AppCompatActivity {
         gridThongKe.setOnItemClickListener((parent, view, position, id) -> {
             String title = listThongKe.get(position).getTitle();
             Toast.makeText(this, "Mở " + title, Toast.LENGTH_SHORT).show();
+            switch (title) {
+                case "Thống kê":
+                    startActivity(new Intent(MenuActivity.this, ThongKeActivity.class));
+                    break;
+                case "Top sản phẩm":
+//                    startActivity(new Intent(MenuActivity.this, TopSanPhamActivity.class));
+                    break;
+                case "Top khách hàng":
+//                    startActivity(new Intent(MenuActivity.this, TopKhachHangActivity.class));
+                    break;
+                default:
+                    Toast.makeText(this, "Mở " + title, Toast.LENGTH_SHORT).show();
+            }
         });
 
         gridQuanLy.setOnItemClickListener((parent, view, position, id) -> {
@@ -134,7 +148,6 @@ public class MenuActivity extends AppCompatActivity {
                     intent.putExtra("MaNhanVien", getIntent().getStringExtra("MaNhanVien"));
                     intent.putExtra("TenNhanVien", getIntent().getStringExtra("TenNhanVien"));
                     startActivity(intent);
-
                     break;
                 case "Khách hàng":
                     startActivity(new Intent(MenuActivity.this, KhachHangActivity.class));

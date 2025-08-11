@@ -111,7 +111,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
         // Dữ liệu mẫu NHAN_VIEN
         db.execSQL("INSERT INTO NHAN_VIEN VALUES " +
-                "('NV01', 'Lê Văn Quang', 'Hà Nội', 1, 12000000, 'adminpass')," +
+                "('NV01', 'Lê Xuân Hải', 'Hà Nội', 1, 12000000, 'adminpass')," +
                 "('NV02', 'Phạm Thị Hoa', 'Sài Gòn', 0, 9000000, 'nvpass')");
 
         // Dữ liệu mẫu DANH_MUC
@@ -136,8 +136,8 @@ public class DbHelper extends SQLiteOpenHelper {
 
         // Dữ liệu mẫu CHI_TIET_HOA_DON
         db.execSQL("INSERT INTO CHI_TIET_HOA_DON VALUES " +
-                "('CT01', 'HD01', 'SP01', 1, 25000000)," +
-                "('CT02', 'HD02', 'SP02', 1, 32000000)");
+                "('CT01', '1', 'SP01', 1, 25000000)," +
+                "('CT02', '2', 'SP02', 1, 32000000)");
 
         // Dữ liệu mẫu TAI_KHOAN
         db.execSQL("INSERT INTO TAI_KHOAN VALUES " +

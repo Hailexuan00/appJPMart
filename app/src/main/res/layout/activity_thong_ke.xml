@@ -1,10 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChucNang.ThongKeActivity">
+    android:orientation="vertical"
+    >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#9C27B0"
+        app:title="Thống kê doanh thu"
+        app:titleTextColor="@android:color/white" />
+
+    <!-- Tiêu đề -->
+    <TextView
+        android:text="Thống kê doanh thu"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Nhập từ ngày -->
+    <EditText
+        android:id="@+id/edtTuNgay"
+        android:hint="Nhập ngày bắt đầu (YYYY-MM-DD)"
+        android:focusable="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none" />
+
+    <!-- Nhập đến ngày -->
+    <EditText
+        android:id="@+id/edtDenNgay"
+        android:hint="Nhập ngày kết thúc (YYYY-MM-DD)"
+        android:focusable="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none" />
+
+    <!-- Nút thống kê -->
+    <Button
+        android:id="@+id/btnThongKeDoanhThu"
+        android:text="Thống kê doanh thu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#03A9F4"
+        android:textColor="@android:color/white" />
+
+    <!-- Kết quả -->
+    <TextView
+        android:id="@+id/tvDoanhThu"
+        android:text="Doanh thu: 0 VND"
+        android:textColor="#F44336"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
