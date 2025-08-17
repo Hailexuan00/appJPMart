@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/purple_500"
+        app:title="Thống kê khách hàng"
+        app:titleTextColor="@android:color/white" />
+
+    <!-- Từ ngày -->
+    <EditText
+        android:id="@+id/edtTuNgay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Từ ngày (yyyy-MM-dd)"
+        android:focusable="false"
+        android:clickable="true"
+        android:drawableEnd="@android:drawable/ic_menu_today"
+        android:padding="12dp"
+        android:background="@android:drawable/edit_text"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Đến ngày -->
+    <EditText
+        android:id="@+id/edtDenNgay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Đến ngày (yyyy-MM-dd)"
+        android:focusable="false"
+        android:clickable="true"
+        android:drawableEnd="@android:drawable/ic_menu_today"
+        android:padding="12dp"
+        android:background="@android:drawable/edit_text"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Nhập số lượng -->
+    <EditText
+        android:id="@+id/edtSoLuong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Số lượng top khách hàng"
+        android:inputType="number"
+        android:padding="12dp"
+        android:background="@android:drawable/edit_text"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Nút thống kê -->
+    <Button
+        android:id="@+id/btnThongKe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thống kê top khách hàng"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@android:color/white"
+        android:padding="12dp"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvThongKeKhachHang"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+</LinearLayout>

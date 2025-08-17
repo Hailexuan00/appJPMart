@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import fpoly.hailxph49396.jpmart_app.Database.DbHelper;
 import fpoly.hailxph49396.jpmart_app.DTO.KhachHangDTO;
@@ -86,4 +87,30 @@ public class KhachHangDAO {
         return list;
     }
 
+    // Hàm lấy top khách hàng theo tổng chi tiêu
+    public ArrayList<HashMap<String, Object>> getTopKhachHang(String tuNgay, String denNgay, int soLuong) {
+        ArrayList<HashMap<String, Object>> list = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String sql = "SELECT KH.MaKhachHang, KH.TenKhachHang, SUM(HD.TongTien) as TongChiTieu " +
+                "FROM HOA_DON HD " +
+                "JOIN KHACH_HANG KH ON KH.MaKhachHang = HD.MaKhachHang " +
+                "WHERE HD.NgayLap BETWEEN ? AND ? " +
+                "GROUP BY KH.MaKhachHang, KH.TenKhachHang " +
+                "ORDER BY TongChiTieu DESC " +
+                "LIMIT ?";
+
+        Cursor c = db.rawQuery(sql, new String[]{tuNgay, denNgay, String.valueOf(soLuong)});
+        if (c.moveToFirst()) {
+            do {
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("MaKhachHang", c.getString(0));
+                map.put("TenKhachHang", c.getString(1));
+                map.put("TongChiTieu", c.getInt(2));
+                list.add(map);
+            } while (c.moveToNext());
+        }
+        c.close();
+        return list;
+    }
 }

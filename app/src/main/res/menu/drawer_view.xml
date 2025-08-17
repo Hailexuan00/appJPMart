@@ -17,34 +17,5 @@
             android:id="@+id/nav_ThanhVien"
 
             android:title="Quản lý Thành Viên"/>
-        <item android:title="Thống kê">
-            <menu>
-                <item
-                    android:id="@+id/sub_Top"
-
-                    android:title="10 Sách mượn nhiều nhất"/>
-                <item
-                    android:id="@+id/sub_DoanhThu"
-
-                    android:title="Doanh Thu"/>
-            </menu>
-        </item>
-        <item android:title="Người dùng">
-            <menu>
-                <item
-                    android:id="@+id/sub_AddUser"
-
-                    android:visible="false"
-                    android:title="Thêm người dùng"/>
-                <item
-                    android:id="@+id/sub_Pass"
-
-                    android:title="Đổi mật khẩu"/>
-                <item
-                    android:id="@+id/sub_Logout"
-
-                    android:title="Đăng xuất"/>
-            </menu>
-        </item>
     </group>
 </menu>

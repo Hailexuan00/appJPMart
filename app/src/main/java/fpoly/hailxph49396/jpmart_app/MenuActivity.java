@@ -27,6 +27,7 @@ import fpoly.hailxph49396.jpmart_app.ChucNang.KhachHangActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.NhanVienActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.SanPhamActivity;
 import fpoly.hailxph49396.jpmart_app.ChucNang.ThongKeActivity;
+import fpoly.hailxph49396.jpmart_app.ChucNang.ThongKeKhachHangActivity;
 import fpoly.hailxph49396.jpmart_app.DAO.TaikhoanDAO;
 import fpoly.hailxph49396.jpmart_app.DTO.MenuDTO;
 import fpoly.hailxph49396.jpmart_app.DTO.NhanVienDTO;
@@ -96,7 +97,7 @@ public class MenuActivity extends AppCompatActivity {
         if (user.getChucVu() == 1) { // Quản lý
             listThongKe.add(new MenuDTO("Thống kê", R.drawable.thongke));
             listThongKe.add(new MenuDTO("Top sản phẩm", R.drawable.dinosaur));
-            listThongKe.add(new MenuDTO("Top khách hàng", R.drawable.dinosaur));
+            listThongKe.add(new MenuDTO("Top khách hàng", R.drawable.topkhachhang));
 
             listQuanLy.add(new MenuDTO("Sản phẩm", R.drawable.sanpham));
             listQuanLy.add(new MenuDTO("Khách hàng", R.drawable.khach));
@@ -131,7 +132,7 @@ public class MenuActivity extends AppCompatActivity {
 //                    startActivity(new Intent(MenuActivity.this, TopSanPhamActivity.class));
                     break;
                 case "Top khách hàng":
-//                    startActivity(new Intent(MenuActivity.this, TopKhachHangActivity.class));
+                    startActivity(new Intent(MenuActivity.this, ThongKeKhachHangActivity.class));
                     break;
                 default:
                     Toast.makeText(this, "Mở " + title, Toast.LENGTH_SHORT).show();
