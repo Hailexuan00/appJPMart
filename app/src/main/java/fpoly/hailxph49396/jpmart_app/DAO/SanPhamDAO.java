@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import fpoly.hailxph49396.jpmart_app.Database.DbHelper;
 import fpoly.hailxph49396.jpmart_app.DTO.SanPhamDTO;
@@ -135,5 +136,32 @@ public boolean themVaoGio(SanPhamDTO sp) {
     }
 }
 
+    // Thống kê top sản phẩm bán chạy trong khoảng thời gian
+    public ArrayList<HashMap<String, Object>> getTopSanPham(String tuNgay, String denNgay, int soLuong) {
+        ArrayList<HashMap<String, Object>> list = new ArrayList<>();
+
+        String sql = "SELECT sp.TenSanPham, SUM(ct.SoLuong) as TongSoLuong " +
+                "FROM CHI_TIET_HOA_DON ct " +
+                "JOIN SAN_PHAM sp ON ct.MaSanPham = sp.MaSanPham " +
+                "JOIN HOA_DON hd ON ct.MaHoaDon = hd.MaHoaDon " +
+                "WHERE hd.NgayLap BETWEEN ? AND ? " +
+                "GROUP BY sp.TenSanPham " +
+                "ORDER BY TongSoLuong DESC " +
+                "LIMIT ?";
+
+        Cursor cursor = db.rawQuery(sql, new String[]{tuNgay, denNgay, String.valueOf(soLuong)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("TenSanPham", cursor.getString(cursor.getColumnIndexOrThrow("TenSanPham")));
+                map.put("TongSoLuong", cursor.getInt(cursor.getColumnIndexOrThrow("TongSoLuong")));
+                list.add(map);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return list;
+    }
 
 }

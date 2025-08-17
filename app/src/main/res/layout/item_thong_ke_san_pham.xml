@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@android:color/white"
+    android:layout_marginBottom="8dp"
+    android:elevation="2dp">
+
+    <!-- Tên sản phẩm -->
+    <TextView
+        android:id="@+id/tvTenSanTopPham"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tên sản phẩm"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"/>
+
+    <!-- Số lượng bán -->
+    <TextView
+        android:id="@+id/tvTopSoLuongBan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Số lượng bán: 10"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"/>
+
+    <!-- Doanh thu -->
+    <TextView
+        android:id="@+id/tvDoanhThu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Doanh thu: 25,000,000 VNĐ"
+        android:textSize="14sp"
+        android:textColor="@android:color/holo_red_dark"/>
+</LinearLayout>
