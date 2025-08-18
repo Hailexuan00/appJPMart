@@ -1,32 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="@android:color/background_light">
 
+    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/purple_500"
+        android:elevation="4dp"
         app:title="Quản lý Khách Hàng"
         app:titleTextColor="@android:color/white" />
 
+    <!-- Search bar -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:layout_marginTop="10dp">
+        android:layout_margin="12dp">
 
         <ImageView
             android:id="@+id/imgBack"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:src="@drawable/ic_search_24"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="8dp" />
 
         <EditText
             android:id="@+id/edtSearchSP"
@@ -34,38 +36,48 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:hint="Tìm kiếm sản phẩm"
-            android:padding="8dp"
-            android:background="@drawable/bg_edittext" />
+            android:padding="10dp"
+            android:background="@drawable/bg_edittext"
+            android:drawablePadding="8dp"/>
     </LinearLayout>
 
+    <!-- Giỏ hàng -->
     <ImageButton
         android:id="@+id/imgGioHang"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_gravity="center"
+        android:layout_gravity="end"
         android:src="@drawable/ic_add_shopping_cart_24"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp" />
+        android:background="@null"/>
 
+    <!-- RecyclerView và FAB -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="12dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerSanPham"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="80dp"
+            android:scrollbars="vertical" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="Thêm khách hàng"
             android:src="@android:drawable/ic_input_add"
+            android:contentDescription="Thêm khách hàng"
             android:layout_gravity="bottom|end"
-            android:layout_margin="16dp" />
+            android:layout_margin="16dp"
+            app:backgroundTint="?attr/colorPrimary"
+            app:tint="@android:color/white"
+            app:elevation="6dp"/>
     </FrameLayout>
 
 </LinearLayout>

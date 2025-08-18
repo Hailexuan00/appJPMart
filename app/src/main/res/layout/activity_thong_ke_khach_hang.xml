@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    >
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
@@ -11,61 +12,94 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/purple_500"
+        android:elevation="4dp"
         app:title="Thống kê khách hàng"
         app:titleTextColor="@android:color/white" />
 
     <!-- Từ ngày -->
-    <EditText
-        android:id="@+id/edtTuNgay"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Từ ngày (yyyy-MM-dd)"
-        android:focusable="false"
-        android:clickable="true"
-        android:drawableEnd="@android:drawable/ic_menu_today"
-        android:padding="12dp"
-        android:background="@android:drawable/edit_text"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusTopStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusBottomEnd="8dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtTuNgay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Từ ngày (yyyy-MM-dd)"
+            android:focusable="false"
+            android:clickable="true"
+            android:drawableEnd="@android:drawable/ic_menu_today"
+            android:padding="12dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Đến ngày -->
-    <EditText
-        android:id="@+id/edtDenNgay"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Đến ngày (yyyy-MM-dd)"
-        android:focusable="false"
-        android:clickable="true"
-        android:drawableEnd="@android:drawable/ic_menu_today"
-        android:padding="12dp"
-        android:background="@android:drawable/edit_text"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusTopStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusBottomEnd="8dp">
 
-    <!-- Nhập số lượng -->
-    <EditText
-        android:id="@+id/edtSoLuong"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtDenNgay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Đến ngày (yyyy-MM-dd)"
+            android:focusable="false"
+            android:clickable="true"
+            android:drawableEnd="@android:drawable/ic_menu_today"
+            android:padding="12dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Số lượng top khách hàng -->
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Số lượng top khách hàng"
-        android:inputType="number"
-        android:padding="12dp"
-        android:background="@android:drawable/edit_text"
-        android:layout_marginBottom="12dp"/>
+        android:layout_marginBottom="12dp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusTopStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusBottomEnd="8dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtSoLuong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Số lượng top khách hàng"
+            android:inputType="number"
+            android:padding="12dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Nút thống kê -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnThongKe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Thống kê top khách hàng"
-        android:backgroundTint="@color/purple_500"
-        android:textColor="@android:color/white"
+        android:layout_marginBottom="12dp"
         android:padding="12dp"
-        android:layout_marginBottom="12dp"/>
+        app:cornerRadius="8dp"
+        app:backgroundTint="@color/purple_500"
+        android:textColor="@android:color/white"/>
 
     <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvThongKeKhachHang"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:padding="8dp"
+        android:scrollbars="vertical"/>
 </LinearLayout>

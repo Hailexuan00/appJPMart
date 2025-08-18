@@ -130,31 +130,57 @@ public class DbHelper extends SQLiteOpenHelper {
                 "('NV09', 'Bùi Văn Hùng', 'Đà Lạt', 1, 11500000, 'pass09')," +
                 "('NV10', 'Vũ Thị Kiều', 'Nam Định', 0, 8900000, 'pass10')");
 
-// Dữ liệu mẫu DANH_MUC (10 danh mục)
+//// Dữ liệu mẫu DANH_MUC (10 danh mục)
+//        db.execSQL("INSERT INTO DANH_MUC VALUES " +
+//                "('DM01', 'Điện thoại')," +
+//                "('DM02', 'Laptop')," +
+//                "('DM03', 'Máy tính bảng')," +
+//                "('DM04', 'Phụ kiện')," +
+//                "('DM05', 'Tivi')," +
+//                "('DM06', 'Tai nghe')," +
+//                "('DM07', 'Đồng hồ thông minh')," +
+//                "('DM08', 'Camera')," +
+//                "('DM09', 'Loa Bluetooth')," +
+//                "('DM10', 'Máy in')");
+        // Dữ liệu mẫu DANH_MUC (10 danh mục siêu thị)
         db.execSQL("INSERT INTO DANH_MUC VALUES " +
-                "('DM01', 'Điện thoại')," +
-                "('DM02', 'Laptop')," +
-                "('DM03', 'Máy tính bảng')," +
-                "('DM04', 'Phụ kiện')," +
-                "('DM05', 'Tivi')," +
-                "('DM06', 'Tai nghe')," +
-                "('DM07', 'Đồng hồ thông minh')," +
-                "('DM08', 'Camera')," +
-                "('DM09', 'Loa Bluetooth')," +
-                "('DM10', 'Máy in')");
+                "('DM01', 'Rau củ')," +
+                "('DM02', 'Trái cây')," +
+                "('DM03', 'Thịt cá')," +
+                "('DM04', 'Đồ uống')," +
+                "('DM05', 'Sữa & chế phẩm')," +
+                "('DM06', 'Mì & gạo')," +
+                "('DM07', 'Gia vị')," +
+                "('DM08', 'Đồ hộp')," +
+                "('DM09', 'Bánh kẹo')," +
+                "('DM10', 'Đồ gia dụng')");
 
-// Dữ liệu mẫu SAN_PHAM (10 sản phẩm)
+
+//// Dữ liệu mẫu SAN_PHAM (10 sản phẩm)
+//        db.execSQL("INSERT INTO SAN_PHAM VALUES " +
+//                "('SP01', 'iPhone 15', 25000000, 10, 'Cái', '2025-07-01', 'DM01')," +
+//                "('SP02', 'MacBook Air M2', 32000000, 5, 'Cái', '2025-07-03', 'DM02')," +
+//                "('SP03', 'iPad Pro 12.9', 28000000, 7, 'Cái', '2025-07-05', 'DM03')," +
+//                "('SP04', 'AirPods Pro 2', 5500000, 15, 'Cái', '2025-07-06', 'DM04')," +
+//                "('SP05', 'Samsung Galaxy S24', 23000000, 12, 'Cái', '2025-07-07', 'DM01')," +
+//                "('SP06', 'Dell XPS 13', 34000000, 6, 'Cái', '2025-07-08', 'DM02')," +
+//                "('SP07', 'Sony WH-1000XM5', 9000000, 8, 'Cái', '2025-07-09', 'DM06')," +
+//                "('SP08', 'Apple Watch Ultra 2', 22000000, 9, 'Cái', '2025-07-10', 'DM07')," +
+//                "('SP09', 'Canon EOS R10', 28000000, 4, 'Cái', '2025-07-11', 'DM08')," +
+//                "('SP10', 'JBL Flip 6', 3500000, 20, 'Cái', '2025-07-12', 'DM09')");
+
+        // Dữ liệu mẫu SAN_PHAM (10 sản phẩm siêu thị)
         db.execSQL("INSERT INTO SAN_PHAM VALUES " +
-                "('SP01', 'iPhone 15', 25000000, 10, 'Cái', '2025-07-01', 'DM01')," +
-                "('SP02', 'MacBook Air M2', 32000000, 5, 'Cái', '2025-07-03', 'DM02')," +
-                "('SP03', 'iPad Pro 12.9', 28000000, 7, 'Cái', '2025-07-05', 'DM03')," +
-                "('SP04', 'AirPods Pro 2', 5500000, 15, 'Cái', '2025-07-06', 'DM04')," +
-                "('SP05', 'Samsung Galaxy S24', 23000000, 12, 'Cái', '2025-07-07', 'DM01')," +
-                "('SP06', 'Dell XPS 13', 34000000, 6, 'Cái', '2025-07-08', 'DM02')," +
-                "('SP07', 'Sony WH-1000XM5', 9000000, 8, 'Cái', '2025-07-09', 'DM06')," +
-                "('SP08', 'Apple Watch Ultra 2', 22000000, 9, 'Cái', '2025-07-10', 'DM07')," +
-                "('SP09', 'Canon EOS R10', 28000000, 4, 'Cái', '2025-07-11', 'DM08')," +
-                "('SP10', 'JBL Flip 6', 3500000, 20, 'Cái', '2025-07-12', 'DM09')");
+                "('SP01', 'Rau muống', 15000, 50, 'Bó', '2025-07-01', 'DM01')," +
+                "('SP02', 'Táo Mỹ', 80000, 30, 'Kg', '2025-07-02', 'DM02')," +
+                "('SP03', 'Cá basa fillet', 90000, 20, 'Kg', '2025-07-03', 'DM03')," +
+                "('SP04', 'Nước suối Aquafina', 6000, 100, 'Chai', '2025-07-04', 'DM04')," +
+                "('SP05', 'Sữa tươi Vinamilk 1L', 32000, 40, 'Hộp', '2025-07-05', 'DM05')," +
+                "('SP06', 'Gạo ST25', 25000, 80, 'Kg', '2025-07-06', 'DM06')," +
+                "('SP07', 'Nước mắm Nam Ngư 500ml', 18000, 60, 'Chai', '2025-07-07', 'DM07')," +
+                "('SP08', 'Cá hộp 3 Cô Gái', 25000, 50, 'Hộp', '2025-07-08', 'DM08')," +
+                "('SP09', 'Kẹo sữa Alpenliebe', 15000, 70, 'Gói', '2025-07-09', 'DM09')," +
+                "('SP10', 'Nước rửa chén Sunlight 1.5L', 45000, 25, 'Chai', '2025-07-10', 'DM10')");
 
 // Dữ liệu mẫu HOA_DON (10 hóa đơn)
         db.execSQL("INSERT INTO HOA_DON (MaKhachHang, MaNhanVien, NgayLap, TongTien) VALUES " +

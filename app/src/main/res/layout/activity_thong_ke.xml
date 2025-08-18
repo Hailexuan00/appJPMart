@@ -1,67 +1,85 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:background="@android:color/background_light">
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#9C27B0"
+        android:background="@color/purple_500"
+        android:elevation="4dp"
         app:title="Thống kê doanh thu"
         app:titleTextColor="@android:color/white" />
 
-    <!-- Tiêu đề -->
-    <TextView
-        android:text="Thống kê doanh thu"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:layout_marginTop="12dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <!-- Nhập từ ngày -->
-    <EditText
-        android:id="@+id/edtTuNgay"
-        android:hint="Nhập ngày bắt đầu (YYYY-MM-DD)"
-        android:focusable="false"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="none" />
+        android:layout_marginTop="12dp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusTopStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusBottomEnd="8dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtTuNgay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập ngày bắt đầu (YYYY-MM-DD)"
+            android:focusable="false"
+            android:clickable="true"
+            android:drawableEnd="@android:drawable/ic_menu_today"
+            android:padding="12dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Nhập đến ngày -->
-    <EditText
-        android:id="@+id/edtDenNgay"
-        android:hint="Nhập ngày kết thúc (YYYY-MM-DD)"
-        android:focusable="false"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="none" />
+        android:layout_marginTop="8dp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusTopStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusBottomEnd="8dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtDenNgay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập ngày kết thúc (YYYY-MM-DD)"
+            android:focusable="false"
+            android:clickable="true"
+            android:drawableEnd="@android:drawable/ic_menu_today"
+            android:padding="12dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Nút thống kê -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnThongKeDoanhThu"
-        android:text="Thống kê doanh thu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Thống kê doanh thu"
         android:layout_marginTop="12dp"
-        android:backgroundTint="#03A9F4"
-        android:textColor="@android:color/white" />
+        android:padding="12dp"
+        app:cornerRadius="8dp"
+        app:backgroundTint="#03A9F4"
+        android:textColor="@android:color/white"/>
 
-    <!-- Kết quả -->
+    <!-- Kết quả doanh thu -->
     <TextView
         android:id="@+id/tvDoanhThu"
         android:text="Doanh thu: 0 VND"
         android:textColor="#F44336"
         android:textStyle="bold"
-        android:textSize="30sp"
+        android:textSize="28sp"
+        android:gravity="center"
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"/>
 </LinearLayout>

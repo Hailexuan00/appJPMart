@@ -1,73 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:background="@android:color/white"
-    android:gravity="center_vertical">
+    android:layout_margin="8dp"
+    card_view:cardCornerRadius="12dp"
+    card_view:cardElevation="4dp"
+    android:foreground="?attr/selectableItemBackground">
 
-    <!-- Icon sản phẩm (có thể dùng ImageView nếu muốn) -->
-    <ImageView
-        android:id="@+id/imgSP"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/bg_jpmart"
-        android:layout_marginEnd="10dp" />
-
-    <!-- Tên + Giá sản phẩm -->
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content">
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/tvTenSP"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tên sản phẩm"
-            android:textStyle="bold"
-            android:textSize="16sp" />
+        <!-- Ảnh sản phẩm -->
+        <ImageView
+            android:id="@+id/imgSP"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_jpmart"
+            android:background="@drawable/bg_image_circle"
+            android:layout_marginEnd="12dp" />
 
-        <TextView
-            android:id="@+id/tvGiaSP"
+        <!-- Thông tin sản phẩm -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvTenSP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên sản phẩm"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tvGiaSP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15.000 đ"
+                android:textColor="@android:color/holo_red_dark"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvSoLuong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số lượng: 10"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Các nút chức năng -->
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="15.000 đ"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp" />
-        <TextView
-            android:id="@+id/tvSoLuong"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Số lượng: 10"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp" />
+            android:gravity="end|center_vertical"
+            android:layout_marginStart="8dp">
+
+            <ImageButton
+                android:id="@+id/btnAddCart"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_add_shopping_cart_24"
+                android:tint="@color/teal_700"
+                android:contentDescription="Thêm vào giỏ"
+                tools:ignore="UseAppTint" />
+
+            <ImageButton
+                android:id="@+id/btnEdit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_edit"
+                android:tint="@color/purple_500"
+                android:contentDescription="Sửa"
+                tools:ignore="UseAppTint" />
+
+            <ImageButton
+                android:id="@+id/btnDelete"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_delete"
+                android:contentDescription="Xoá"
+                card_view:tint="@android:color/holo_red_dark" />
+        </LinearLayout>
     </LinearLayout>
-
-    <!-- Nút chức năng -->
-    <ImageButton
-        android:id="@+id/btnAddCart"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_add_shopping_cart_24"
-        android:contentDescription="Thêm vào giỏ" />
-
-    <ImageButton
-        android:id="@+id/btnEdit"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@android:color/transparent"
-        android:src="@android:drawable/ic_menu_edit"
-        android:contentDescription="Sửa" />
-
-    <ImageButton
-        android:id="@+id/btnDelete"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@android:color/transparent"
-        android:src="@android:drawable/ic_menu_delete"
-        android:contentDescription="Xoá" />
-</LinearLayout>
+</androidx.cardview.widget.CardView>

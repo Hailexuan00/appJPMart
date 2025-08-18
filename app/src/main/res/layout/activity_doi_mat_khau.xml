@@ -11,7 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#9C27B0"
+        android:background="@color/purple_500"
         android:minHeight="?attr/actionBarSize"
         app:title="Đổi mật khẩu"
         app:titleTextColor="@android:color/white"

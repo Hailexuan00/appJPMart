@@ -7,7 +7,7 @@
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        android:background="#9C27B0"
+        android:background="@color/purple_500"
         app:title="Quản lý hóa đơn"
         app:titleTextColor="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"
